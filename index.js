@@ -1,11 +1,17 @@
 const express = require('express')
-const app = express()
+const server = express()
 const port = 4000
 
-app.get('/', (req, res) => {
+
+server.set('view engine', 'ejs');
+server.set('views', './views')
+server.use(express.static("public"))
+
+
+server.get('/', (req, res) => {
   res.send('Ec_inventory_management..!')
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`127.0.0.1:${port}`)
 })
