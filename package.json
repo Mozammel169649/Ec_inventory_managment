@@ -6,20 +6,25 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "scss": "npx sass public/scss/app.scss public/style/app.css -w",
-    "postcss": "npx postcss public/style/app.css -o public/style/app.css"
+    "vite": "npx vite build --config vite_config.js -w"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
+    "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "init": "^0.1.2",
     "nodemon": "^3.0.1",
-    "postcss": "^8.4.31",
-    "postcss-scss": "^4.0.9",
-    "sass": "^1.69.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.1.3",
+    "react-router": "^6.20.0",
+    "react-router-dom": "^6.20.0",
+    "redux": "^4.2.1",
+    "vite": "^5.0.2"
   }
 }
