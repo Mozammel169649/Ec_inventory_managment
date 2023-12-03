@@ -14,9 +14,9 @@ module.exports = mongoose.model("brand",
             },
             status: {
                 type: Boolean,
-                default: true,
+                default: false,
             }
-        }, {
+        },{
             timestamps: true,
         })
     )
