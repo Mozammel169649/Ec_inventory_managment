@@ -40,7 +40,7 @@ const products = async () => {
         discription: html,
         image: "assets/dashboard/images/products/04.png",
     }
-}
+};
 
     module.exports = () => mongoose.connect(db_url)
         .then(async () => {
