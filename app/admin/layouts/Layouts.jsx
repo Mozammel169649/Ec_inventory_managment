@@ -11,9 +11,9 @@ function Layouts() {
         <Sidebar></Sidebar>
         {/*end sidebar wrapper */}
 
-        {/*start header */}
+        {/*start right side*/}
         <Topbar></Topbar>
-        {/*end header */}
+        {/*end right side*/}
 
       </div>
     </div>
