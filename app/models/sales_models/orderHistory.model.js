@@ -18,10 +18,10 @@ module.exports = mongoose.model("history",
             type: Number,
             require: true,
         },
-        due_price:{
-            type: Number,
-            require: true,
-        },
+        pamyment_status : {
+            type : String,
+            default: "complite"
+        }
     },
         {
             timestamps: true,
