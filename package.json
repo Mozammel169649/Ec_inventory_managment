@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed" : "nodemon db_sedder.js",
+    "seed": "nodemon db_sedder.js",
     "start": "nodemon index.js",
     "vite": "npx vite build --config vite_config.js -w"
   },

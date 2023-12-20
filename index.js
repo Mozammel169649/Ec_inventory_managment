@@ -10,10 +10,8 @@ server.use(express.static("public"))
 
 
 server.get('/', (req, res) => {
-  res.send('Ec_inventory_management..!')
+  res.render('home')
 })
-
-
 
 // mongoose.connect("mongodb+srv://mozammel:XDV3cNkHABTYeoFS@cluster0.yp55jwf.mongodb.net/blogDB")
 // .then(()=>{
