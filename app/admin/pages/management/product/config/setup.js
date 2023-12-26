@@ -1,5 +1,5 @@
 const setup = {
     route_prefix: "product",
-    page_title: "product Management"
+    page_title: "Product Management"
 }
 export default setup ;
