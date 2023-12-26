@@ -1,15 +1,19 @@
-import Layouts from "../../../../layouts/Layouts";
-import All from "../All";
-import setup from "./setup";
+import All from "../All"
+import UserLayout from "../Layoute"
+import setup from "./setup"
 
-const {route_prefix} = setup;
+const {route_prefix} = setup
 
 export default {
     path: route_prefix,
-    element: <Layouts></Layouts>,
+    element:<UserLayout/>,
     children: [
         {
             path: "",
+            element: <All></All>
+        },
+        {
+            path: "all",
             element: <All></All>
         },
     ]
