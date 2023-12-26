@@ -1,13 +1,12 @@
-import Layouts from "../../../../layouts/Layouts";
-import All from "../All";
+import All from "../All"
+import ProductLayoute from "../Layoute"
 import setup from "./setup"
 
-
-const { route_prefix } = setup;
+const { route_prefix } = setup
 
 export default {
     path: route_prefix,
-    element: <Layouts></Layouts>,
+    element: <ProductLayoute/>,
     children: [
         {
             path: "",
