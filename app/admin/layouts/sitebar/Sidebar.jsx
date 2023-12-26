@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Sidebar() {
     return (
@@ -30,10 +31,10 @@ function Sidebar() {
                     <ul>
                         <li>
                             {" "}
-                            <a href="index.html">
+                            <Link to="/">
                                 <i className="bx bx-radio-circle" />
                                 Default
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             {" "}
@@ -89,17 +90,17 @@ function Sidebar() {
                     <ul>
                         <li>
                             {" "}
-                            <a href="app-emailbox.html">
+                            <Link to="user">
                                 <i className="bx bx-radio-circle" />
-                                Email
-                            </a>
+                                Users
+                            </Link>
                         </li>
                         <li>
                             {" "}
-                            <a href="app-chat-box.html">
+                            <Link to="product">
                                 <i className="bx bx-radio-circle" />
-                                Chat Box
-                            </a>
+                                Product
+                            </Link>
                         </li>
                         <li>
                             {" "}
