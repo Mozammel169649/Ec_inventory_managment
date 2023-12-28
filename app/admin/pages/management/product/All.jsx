@@ -1,8 +1,19 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
+
 
 function All() {
-  
-  
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const modelData = async () => {
+      const response = await axios.get('/api/v1/product')
+      console.log(response.data);
+      setProduct(response.data);
+    }
+    modelData();
+  }, []);
 
   return (
     <div>
@@ -10,24 +21,27 @@ function All() {
       <table className="table table-success table-striped">
         <thead>
           <tr>
-            <td>Id</td>
-            <td>Image</td>
-            <td>Number</td>
+            <td>Image</td>           
             <td>Title</td>
-            <td>Satus</td>
-            <td>Stoke</td>
+            <td>Satus</td>            
             <td>Brand</td>
-            <td>Creator</td>
-            <td>Supplayer</td>
-            <td>Product_issu</td>
             <td>Price</td>
             <td>Discount</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-             
-          </tr>
+          {
+            product.map(ele => (
+              <tr>
+                <td><img width="30px" src={'/'+ ele?.image} alt=""/></td>
+                <td>{ele?.title}</td>
+                <td>{ele?.status} </td>
+                <td>{ele?.brand}</td>
+                <td>{ele?.price}</td>
+                <td>{ele?.discount}</td>
+              </tr>
+            ) )
+          }
         </tbody>
       </table>
     </div>
