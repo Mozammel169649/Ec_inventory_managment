@@ -3,6 +3,10 @@ const server = express()
 const port = 4001
 const mongoose = require('mongoose')
 const { db_url } = require('./configs/db_config')
+const allRoute = require('./routes/all.route.js')
+const route = express.Router()
+
+
 
 server.set('view engine', 'ejs');
 server.set('views', './views')
@@ -12,6 +16,13 @@ server.use(express.static("public"))
 server.get('/', (req, res) => {
   res.render('home')
 })
+
+// server.get('/dashboard/user', (req, res) => {
+//   res.send("right roting")
+// })
+
+server.use("/api/v1",allRoute());
+
 
 // mongoose.connect("mongodb+srv://mozammel:XDV3cNkHABTYeoFS@cluster0.yp55jwf.mongodb.net/blogDB")
 // .then(()=>{
