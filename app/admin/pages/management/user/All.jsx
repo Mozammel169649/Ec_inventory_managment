@@ -19,7 +19,7 @@ function All() {
       <table className="table table-success table-striped">
         <thead>
           <tr>
-            <td>Id</td>
+            
             <td>Name</td>
             <td>Email</td>
             <td>Role</td>
@@ -30,7 +30,6 @@ function All() {
           {
             user.map(ele =>
               <tr>
-                <td>{ele?._id}</td>
                 <td>{ele?.userName}</td>
                 <td>{ele?.email}</td>
                 <td>{ele?.role}</td>
