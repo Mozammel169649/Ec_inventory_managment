@@ -20,25 +20,31 @@ function All() {
       <h5> All Products</h5>
       <table className="table table-success table-striped">
         <thead>
-          <tr>
+          <tr >
             <td>Image</td>           
             <td>Title</td>
             <td>Satus</td>            
             <td>Brand</td>
             <td>Price</td>
             <td>Discount</td>
+            <td>Acions</td>
           </tr>
         </thead>
         <tbody>
           {
             product.map(ele => (
-              <tr>
-                <td><img width="30px" src={'/'+ ele?.image} alt=""/></td>
-                <td>{ele?.title}</td>
-                <td>{ele?.status} </td>
-                <td>{ele?.brand}</td>
-                <td>{ele?.price}</td>
-                <td>{ele?.discount}</td>
+              <tr >
+                <td class="justify-content-center" ><img width="30px" src={'/'+ ele?.image} alt=""/></td>
+                <td class="justify-content-center" >{ele?.title}</td>
+                <td class="justify-content-center" >{ele?.status?"active":"Unactive"} </td>
+                <td class="justify-content-center" >{ele?.brand}</td>
+                <td class="justify-content-center" >{ele?.price}</td>
+                <td class="justify-content-center" >{ele?.discount}</td>
+                <td class="justify-content-center"  >
+                   <button className='btn btn-info m-2'>View</button>
+                   <button className='btn btn-warning m-2'>Edit</button>
+                   <button className='btn btn-danger m-2'>Delete</button> 
+                </td>
               </tr>
             ) )
           }

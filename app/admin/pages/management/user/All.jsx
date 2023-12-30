@@ -23,8 +23,7 @@ function All() {
             <td>Name</td>
             <td>Email</td>
             <td>Role</td>
-            <td>contuct</td>
-            <td>Address</td>
+            <td>Actions</td>
           </tr>
         </thead>
         <tbody>
@@ -35,8 +34,11 @@ function All() {
                 <td>{ele?.userName}</td>
                 <td>{ele?.email}</td>
                 <td>{ele?.role}</td>
-                <td>{ele?.contuct}</td>
-                <td>{ele?.address}</td>
+                <td class="justify-content-center"  >
+                   <button className='btn btn-info m-2'>View</button>
+                   <button className='btn btn-warning m-2'>Edit</button>
+                   <button className='btn btn-danger m-2'>Delete</button> 
+                </td>
               </tr>
 
             )
