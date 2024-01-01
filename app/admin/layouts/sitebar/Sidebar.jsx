@@ -5,13 +5,15 @@ function Sidebar() {
     return (
         <div className="sidebar-wrapper" data-simplebar="true">
             <div className="sidebar-header">
-                <div>
-                    <img
-                        src="/assets/dashboard/images/logo-icon.png"
-                        className="logo-icon"
-                        alt="logo icon"
-                    />
-                </div>
+                <a href="/">
+                    <div >
+                        <img
+                            src="/assets/dashboard/images/logo-icon.png"
+                            className="logo-icon"
+                            alt="logo icon"
+                        />
+                    </div>
+                </a>
                 <div>
                     <h4 className="logo-text">Dashtreme</h4>
                 </div>
