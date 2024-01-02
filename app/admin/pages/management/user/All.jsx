@@ -6,7 +6,7 @@ function All() {
 
   useEffect(() => {
     const modelData = async () => {
-      const response = await axios.get('/api/v1/user')
+      const response = await axios.get('/user')
       setUser(response.data)
       console.log(response.data)
     }
@@ -19,7 +19,7 @@ function All() {
       <table className="table table-success table-striped">
         <thead>
           <tr>
-            
+
             <td>Name</td>
             <td>Email</td>
             <td>Role</td>
@@ -32,11 +32,16 @@ function All() {
               <tr>
                 <td>{ele?.userName}</td>
                 <td>{ele?.email}</td>
-                <td>{ele?.role}</td>
+                <td>
+                  <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input d-inline-block" type="checkbox"
+                      role="switch" id="" />
+                  </div>
+                </td>
                 <td class="justify-content-center"  >
-                   <button className='btn btn-info m-2'>View</button>
-                   <button className='btn btn-warning m-2'>Edit</button>
-                   <button className='btn btn-danger m-2'>Delete</button> 
+                  <button className='btn btn-info m-2'>View</button>
+                  <button className='btn btn-warning m-2'>Edit</button>
+                  <button className='btn btn-danger m-2'>Delete</button>
                 </td>
               </tr>
 
