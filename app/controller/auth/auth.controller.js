@@ -51,12 +51,11 @@ const authController = {
         }
         console.log(req.session)
         res.redirect('/dashboard');
-        
+
     },
 
     login: async function (req, res) {
         const { email, password } = req.body;
-
         let login_error = {};
         req.session.login_old = req.body;
 
@@ -72,7 +71,10 @@ const authController = {
             return res.redirect("/login");
         }
 
-        let user = await userModel.where({ email: email }).findOne();
+
+
+        let user = await userModel.findOne();
+
         if (user) {
             let passMatch = await bcrypt.compare(password, user.password);
             if (passMatch) {
@@ -84,9 +86,8 @@ const authController = {
                     email: user.email,
                     _id: user._id,
                     role: user.role,
-                    photo_url: '',
-                    device_id: '',
-                    genrate_time: '',
+                    address: "",
+                    contact: ""
                 };
                 const token = await jwt.sign(data, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
                 res.cookie('atoken', token)
