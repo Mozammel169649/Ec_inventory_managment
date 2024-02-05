@@ -1,0 +1,5 @@
+/node_modules
+/public/assets/dashboard/images
+/public/assets/dashboard/flags
+/configs/db_config
+/public/frontend/theme
