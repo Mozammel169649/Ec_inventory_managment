@@ -7,6 +7,12 @@ const user_role = [
         role : 'admin'
     },
     {
+        role : 'manager'
+    },
+    {
+        role : 'seller'
+    },
+    {
         role : 'user'
     }
 ];

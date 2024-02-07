@@ -1,6 +1,6 @@
 const express = require('express')
 const server = express()
-const port = 5555
+const port = 3000
 const mongoose = require('mongoose')
 const { db_url } = require('./configs/db_config')
 const allRoute = require('./routes/all.route.js')
@@ -30,9 +30,8 @@ server.set('views', './views')
 server.use(express.static("public"))
 
 
-server.use(async (req, res, next) => {
-
-})
+// server.use(async (req, res, next) => {
+// })
 
 server.use(allRoute());
 
