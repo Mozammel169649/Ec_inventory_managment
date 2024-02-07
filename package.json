@@ -11,7 +11,6 @@
     "seller_vite": "npx vite build --config vite.seller_config.js -w",
     "manager_vite": "npx vite build --config vite.manager_config.js -w",
     "home_vite": "npx vite build --config vite.home_config.js -w"
-
   },
   "keywords": [],
   "author": "",
@@ -20,8 +19,8 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
-    "axios": "^1.6.3",
-    "bcrypt": "^5.1.0",
+    "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.9",
@@ -32,7 +31,7 @@
     "express-validator": "^7.0.1",
     "fs-extra": "^11.1.1",
     "init": "^0.1.2",
-    "jsonwebtoken": "^9.0.1",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1",
     "nodemon": "^3.0.1",
@@ -42,6 +41,14 @@
     "react-router": "^6.20.0",
     "react-router-dom": "^6.20.0",
     "redux": "^4.2.1",
-    "vite": "^5.0.2"
-  }
+    "vite": "^4.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mozammel169649/Ec_inventory_managment.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mozammel169649/Ec_inventory_managment/issues"
+  },
+  "homepage": "https://github.com/Mozammel169649/Ec_inventory_managment#readme"
 }
