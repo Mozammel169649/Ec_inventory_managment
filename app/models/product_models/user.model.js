@@ -1,4 +1,5 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Schema } = require("mongoose");
+const userRoleModel = require("../user_models/userRole.model");
 
 module.exports = mongoose.model("users",
     mongoose.Schema({
@@ -17,6 +18,7 @@ module.exports = mongoose.model("users",
         role: {
             type: String,
             default: 'user',
+            ref: "userRoleModel"
         },
         address: String,
         contact: String,
