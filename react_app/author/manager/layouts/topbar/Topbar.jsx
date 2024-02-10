@@ -1,7 +1,21 @@
+import axios from 'axios';
 import React from 'react'
 import { Outlet } from 'react-router'
 
 function Topbar() {
+
+  const logout = async (event) => {
+    event.preventDefault();
+    await axios.get("/logout")
+      .then(res => {
+        // navigate("/",{replace:true})
+        window.location.href="/";
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <header>
 
@@ -993,10 +1007,9 @@ function Topbar() {
                 <li>
                   <div className="dropdown-divider mb-0" />
                 </li>
-                <li>
+                <li onClick={logout}>
                   <a
                     className="dropdown-item d-flex align-items-center"
-                    href="javascript:;"
                   >
                     <i className="bx bx-log-out-circle" />
                     <span>Logout</span>
@@ -1006,7 +1019,13 @@ function Topbar() {
             </div>
           </nav>
         </div>
-        <div className='dashboard_wrapper m-3'>
+        <div className='dashboard_wrapper m-3' style={{
+          "overflow": "scroll",
+          "width":'1090px',
+          "float": 'left',
+          "height":'520px',
+          "position":"relative"
+        }}>
           <Outlet></Outlet>
         </div>
       </div>
