@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const controller = {
     signUp: async function (req, res) {
         const { userName, email, password, password_confirmation } = req.body;
-       
+
         let responce = {};
 
         if (!userName || !email || !password || !password_confirmation) {
@@ -40,29 +40,23 @@ const controller = {
             email: email,
             password: await bcrypt.hash(password, 12)
         });
-        // console.log("userModel ok");
         await Data.save();
 
         const userData = await userModel.findOne().where({ email: email })
         // console.log("userdata", userData);
         if (userData) {
-            req.session.isAuth = true;
-            req.session.user = userData;
             // console.log(req.session)
             let data = {
                 userName: userData.userName,
                 email: userData.email,
                 _id: userData._id,
-                role: userData.role,
-                photo_url: '',
-                device_id: '',
-                genrate_time: '',
+                role: userData.role
             };
 
             const token = await jwt.sign(data, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
             res.cookie('atoken', token)
         }
-        
+
         responce.success = "Success signUp a new User"
         return res.json(responce);
     },
@@ -70,8 +64,6 @@ const controller = {
     login: async function (req, res) {
         const { email, password } = req.body;
         let responce = {};
-        req.session.login_old = req.body;
-
         if (!email || !password) {
             if (!email) {
                 responce.email = "Email is required!"
@@ -86,14 +78,11 @@ const controller = {
         if (user) {
             let passMatch = await bcrypt.compare(password, user.password);
             if (passMatch) {
-                let data = {
+                let data = { 
                     userName: user.userName,
                     email: user.email,
                     _id: user._id,
-                    role: user.role,
-                    photo_url: '',
-                    device_id: '',
-                    genrate_time: '',
+                    role:user.role
                 };
 
                 const token = await jwt.sign(data, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
@@ -113,6 +102,10 @@ const controller = {
         }
     },
 
+    logOut: async function (req, res) {
+        res.cookie("atoken", "");
+        return res.json("logout");
+    }
 
 };
 module.exports = controller;
