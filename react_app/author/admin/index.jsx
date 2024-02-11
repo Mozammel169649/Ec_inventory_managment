@@ -1,20 +1,22 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createHashRouter,} from 'react-router-dom';
+import { RouterProvider, createHashRouter, } from 'react-router-dom';
 import Layouts from './layouts/Layouts';
 import Dashboard from './pages/Dashboard';
 import user_router from './pages/management/user/config/router';
 import product_router from './pages/management/product/config/router';
+import { Provider } from 'react-redux';
+import store from './redux/app/store';
 
 function Component() {
     const router = createHashRouter([
         {
             path: "/",
-            element : <Layouts></Layouts>,
-            children : [
+            element: <Layouts></Layouts>,
+            children: [
                 {
-                    path : "",
-                    element : <Dashboard></Dashboard>
+                    path: "",
+                    element: <Dashboard></Dashboard>
                 },
                 user_router,
                 product_router
@@ -28,5 +30,8 @@ function Component() {
 const container = document.getElementById('app');
 const root = createRoot(container);
 root.render(
-    <Component />
+    <Provider store={store}>
+        <Component />
+    </Provider>
+
 );
