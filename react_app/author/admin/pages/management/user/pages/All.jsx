@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../../../redux/features/user/userSlice';
+import { deleteUser, getUser } from '../../../../redux/features/user/userSlice';
 import { Link } from 'react-router-dom';
 
 
@@ -19,8 +19,8 @@ function All() {
   const handleDelete =(id)=>{
     axios.get(`/delete/${id}`,)
     .then(res => {
-      console.log(res.data?.id);
-      // dispatch()
+      // console.log(res.data?.id);
+      dispatch(deleteUser(res.data?.id))
     })
     .catch(err => console.log(err))
   }
