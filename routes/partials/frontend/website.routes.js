@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const webController = require("../../../app/controller/frontend/web.controller");
 
 router
     .get("/", function (req, res) {
-        return res.render("frontend/pages/home");
+      return res.render("frontend/pages/home");
     })
     .get("/dashboard/admin", function (req, res) {
         return res.render("backend/pages/admin/dashboard");
@@ -14,12 +15,9 @@ router
     .get("/dashboard/manager", function (req, res) {
         return res.render("backend/pages/manager/dashboard");
     })
-    .get("/login", function (req, res) {
-        console.log("login ok")
-        return res.render("frontend/pages/login");
-    })
-    .get("/register", function (req, res) {
-        return res.render("frontend/pages/register");
-    })
+    
+
+    .get("/homeNav", webController.navDinamic )
+
 
 module.exports = () => router;
