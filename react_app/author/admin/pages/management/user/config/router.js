@@ -1,6 +1,8 @@
-import All from "../All"
+import All from "../pages/All"
 import UserLayout from "../Layoute"
+import View from "../pages/View"
 import setup from "./setup"
+import Edit from "../pages/Edit"
 
 const {route_prefix} = setup
 
@@ -13,8 +15,12 @@ export default {
             element: <All></All>
         },
         {
-            path: "all",
-            element: <All></All>
+            path: "userView/:id",
+            element: <View></View>
+        },
+        {
+            path: "editUser/:id",
+            element: <Edit></Edit>
         },
     ]
 }
