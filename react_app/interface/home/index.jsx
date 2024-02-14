@@ -26,8 +26,7 @@ function Component() {
                     path : "register",
                     element : <Register></Register>
                 },
-                // user_router,
-                // product_router
+                
 
             ]
         }
