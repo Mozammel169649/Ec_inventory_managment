@@ -3,6 +3,7 @@ const userModel = require("../../models/product_models/user.model");
 const controller = {
     all: async function (req, res) {
         const data = await userModel.find();
+        // console.log("user Data ok",data);
         return res.json(data);
     },
     update: async function (req, res){
