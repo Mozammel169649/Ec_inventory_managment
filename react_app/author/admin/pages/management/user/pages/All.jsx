@@ -1,28 +1,25 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, getUser } from '../../../../redux/features/user/userSlice';
+import { deleteUser, fatchData, getUser } from '../../../../redux/features/user/userSlice';
 import { Link } from 'react-router-dom';
 
 
 function All() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.users.users);
+  // console.log("user", user);
+
   useEffect(() => {
-    const modelData = async () => {
-      const response = await axios.get('/user')
-      dispatch(getUser(response.data));
-    }
-    modelData();
+    dispatch(fatchData());
   }, []);
 
-  const handleDelete =(id)=>{
+  const handleDelete = (id) => {
     axios.get(`/delete/${id}`,)
-    .then(res => {
-      // console.log(res.data?.id);
-      dispatch(deleteUser(res.data?.id))
-    })
-    .catch(err => console.log(err))
+      .then(res => {
+        dispatch(deleteUser(res.data?.id))
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -39,7 +36,7 @@ function All() {
         </thead>
         <tbody>
           {
-            user.map(ele =>
+            user?.map(ele =>
               <tr>
                 <td>{ele?.userName}</td>
                 <td>{ele?.email}</td>
@@ -47,9 +44,9 @@ function All() {
                   {ele?.role}
                 </td>
                 <td class="justify-content-center"  >
-                  <Link to ={`userView/${ele?.id}`} className='btn btn-info m-2'>View</Link>
-                  <Link to ={`editUser/${ele?.id}`} className='btn btn-warning m-2'>Edit</Link>
-                  <button onClick={()=>handleDelete(ele?.id)} className='btn btn-danger m-2'>Delete</button>
+                  <Link to={`userView/${ele?.id}`} className='btn btn-info m-2'>View</Link>
+                  <Link to={`editUser/${ele?.id}`} className='btn btn-warning m-2'>Edit</Link>
+                  <button onClick={() => handleDelete(ele?.id)} className='btn btn-danger m-2'>Delete</button>
                 </td>
               </tr>
             )
