@@ -1,30 +1,27 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, fatchData, getUser } from '../../../../redux/features/user/userSlice';
+import {get_all_user,delete_user} from '../../../../redux/features/user/userSlice';
 import { Link } from 'react-router-dom';
 
 
 function All() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.users.users);
-  // console.log("user", user);
 
   useEffect(() => {
-    dispatch(fatchData());
+    dispatch(get_all_user());
   }, []);
 
   const handleDelete = (id) => {
-    axios.get(`/delete/${id}`,)
-      .then(res => {
-        dispatch(deleteUser(res.data?.id))
-      })
-      .catch(err => console.log(err))
+    dispatch(delete_user(id));
+    dispatch(get_all_user());
   }
 
   return (
     <div>
       <h5> All User</h5>
+
       <table className="table table-success table-striped">
         <thead>
           <tr>
@@ -36,6 +33,7 @@ function All() {
         </thead>
         <tbody>
           {
+            user.length&&
             user?.map(ele =>
               <tr>
                 <td>{ele?.userName}</td>
@@ -44,9 +42,9 @@ function All() {
                   {ele?.role}
                 </td>
                 <td class="justify-content-center"  >
-                  <Link to={`userView/${ele?.id}`} className='btn btn-info m-2'>View</Link>
-                  <Link to={`editUser/${ele?.id}`} className='btn btn-warning m-2'>Edit</Link>
-                  <button onClick={() => handleDelete(ele?.id)} className='btn btn-danger m-2'>Delete</button>
+                  <Link to={`userView/${ele?._id}`} className='btn btn-info m-2'>View</Link>
+                  <Link to={`editUser/${ele?._id}`} className='btn btn-warning m-2'>Edit</Link>
+                  <button onClick={() => handleDelete(ele?._id)} className='btn btn-danger m-2'>Delete</button>
                 </td>
               </tr>
             )
