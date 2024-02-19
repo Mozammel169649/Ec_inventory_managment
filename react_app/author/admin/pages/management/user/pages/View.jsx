@@ -1,19 +1,25 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 function View() {
-  return (
-    <div className='col-md-6 mx-auto'>
-      <center>
-        <h3> User Detalse </h3>
-      </center>
-      <div className='text-center mt-4 '>
-        <p>UserName : mozammel</p>
-        <p>UserEmail : mozammel</p>
-        <p>UserRole : Admin</p>
-      </div>
+    const { id } = useParams();
+    const users = useSelector(state => state.users.users);
+    const user = users.find(e => e._id === id);
 
-    </div>
-  )
+    return (
+        <div className='col-md-6 mx-auto'>
+            <center>
+                <h3> User Detalse </h3>
+            </center>
+            <div className='text-center mt-4 '>
+                <p>UserName : {user.userName}</p>
+                <p>Email : {user.email}</p>
+                <p>Role : {user.role}</p>
+            </div>
+
+        </div>
+    )
 }
 
 export default View
