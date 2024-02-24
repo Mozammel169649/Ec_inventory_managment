@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {get_all_user,delete_user} from '../../../../redux/features/user/userSlice';
+import { get_all_user, delete_user } from '../../../../redux/features/user/userSlice';
 import { Link } from 'react-router-dom';
+import Pagination from '../../../Pagination';
 
 
 function All() {
@@ -20,39 +21,48 @@ function All() {
 
   return (
     <div>
-      <h5> All User</h5>
+      <div>
+        <h5> All User</h5>
+      </div>
 
-      <table className="table table-success table-striped">
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Role</td>
-            <td>Actions</td>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            user.length&&
-            user?.map(ele =>
-              <tr>
-                <td>{ele?.userName}</td>
-                <td>{ele?.email}</td>
-                <td>
-                  {ele?.role}
-                </td>
-                <td class="justify-content-center"  >
-                  <Link to={`userView/${ele?._id}`} className='btn btn-info m-2'>View</Link>
-                  <Link to={`editUser/${ele?._id}`} className='btn btn-warning m-2'>Edit</Link>
-                  <button onClick={() => handleDelete(ele?._id)} className='btn btn-danger m-2'>Delete</button>
-                </td>
-              </tr>
-            )
-          }
-        </tbody>
-      </table>
+      <div>
+        <table className="table table-success table-striped">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Role</td>
+              <td>Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              user.length &&
+              user?.map(ele =>
+                <tr>
+                  <td>{ele?.userName}</td>
+                  <td>{ele?.email}</td>
+                  <td>
+                    {ele?.role}
+                  </td>
+                  <td class="justify-content-center"  >
+                    <Link to={`userView/${ele?._id}`} className='btn btn-info m-2'>View</Link>
+                    <Link to={`editUser/${ele?._id}`} className='btn btn-warning m-2'>Edit</Link>
+                    <button onClick={() => handleDelete(ele?._id)} className='btn btn-danger m-2'>Delete</button>
+                  </td>
+                </tr>
+              )
+            }
+          </tbody>
+        </table>
+      </div>
+      <div className='mb-4'>
+        <Pagination/>
+      </div>
     </div>
   )
 }
 
-export default All 
+export default All
+
+
