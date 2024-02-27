@@ -23,7 +23,7 @@ function Sidebar() {
             </div>
             {/*navigation*/}
             <ul className="metismenu" id="menu">
-                <li>
+                {/* <li>
                     <a href="javascript:;" className="has-arrow">
                         <div className="parent-icon">
                             <i className="bx bx-home-alt" />
@@ -81,7 +81,7 @@ function Sidebar() {
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> */}
                 <li>
                     <a href="javascript:;" className="has-arrow">
                         <div className="parent-icon">
@@ -101,47 +101,34 @@ function Sidebar() {
                             {" "}
                             <Link to="product">
                                 <i className="bx bx-radio-circle" />
-                                Product
+                                Products
                             </Link>
                         </li>
                         <li>
                             {" "}
-                            <a href="app-file-manager.html">
+                            <Link to="category">
                                 <i className="bx bx-radio-circle" />
-                                File Manager
-                            </a>
+                                Categorys
+                            </Link>
                         </li>
                         <li>
                             {" "}
-                            <a href="app-contact-list.html">
+                            <Link to="brand">
                                 <i className="bx bx-radio-circle" />
-                                Contatcs
-                            </a>
+                                Brands
+                            </Link>
                         </li>
                         <li>
                             {" "}
-                            <a href="app-to-do.html">
+                            <Link to="supplier">
                                 <i className="bx bx-radio-circle" />
-                                Todo List
-                            </a>
+                                Suppliers
+                            </Link>
                         </li>
-                        <li>
-                            {" "}
-                            <a href="app-invoice.html">
-                                <i className="bx bx-radio-circle" />
-                                Invoice
-                            </a>
-                        </li>
-                        <li>
-                            {" "}
-                            <a href="app-fullcalender.html">
-                                <i className="bx bx-radio-circle" />
-                                Calendar
-                            </a>
-                        </li>
+                        
                     </ul>
                 </li>
-                <li className="menu-label">UI Elements</li>
+                {/* <li className="menu-label">UI Elements</li>
                 <li>
                     <a href="widgets.html">
                         <div className="parent-icon">
@@ -776,7 +763,7 @@ function Sidebar() {
                         </div>
                         <div className="menu-title">Support</div>
                     </a>
-                </li>
+                </li> */}
             </ul>
             {/*end navigation*/}
         </div>
