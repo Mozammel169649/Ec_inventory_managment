@@ -1,12 +1,12 @@
 const userModel = require("../../models/product_models/user.model");
 
 const controller = {
-    all: async function (req, res) {
+    all: async (req, res)=> {
         const data = await userModel.find();
         // console.log("user Data ok",data);
         return res.json(data);
     },
-    update: async function (req, res){
+    update: async (req, res)=>{
         const id = req.body.id;
         const {userName,email,role} = req.body;
         // console.log(req.body);
@@ -14,7 +14,7 @@ const controller = {
         // console.log(user);
         return res.json(user);
     },
-    delete: async function(req,res){
+    delete: async (req, res)=>{
         console.log("hello");
         const id = req.params.id;
         const user = await userModel.findByIdAndDelete({_id:id});
