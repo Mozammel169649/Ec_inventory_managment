@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createHashRouter, } from 'react-router-dom';
 import Layouts from './layouts/Layouts';
 import Dashboard from './pages/Dashboard';
-import user_router from './pages/management/user/config/router';
-import product_router from './pages/management/product/config/router';
 import { Provider } from 'react-redux';
 import store from './redux/app/store';
+
+import user_router from './pages/management/user/config/router';
+import product_router from './pages/management/product/config/router';
+import category_router from './pages/management/category/config/router';
 
 function Component() {
     const router = createHashRouter([
@@ -19,7 +21,8 @@ function Component() {
                     element: <Dashboard></Dashboard>
                 },
                 user_router,
-                product_router
+                product_router,
+                category_router,
 
             ]
         }
