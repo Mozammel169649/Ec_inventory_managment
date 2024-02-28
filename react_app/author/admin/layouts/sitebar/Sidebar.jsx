@@ -97,13 +97,13 @@ function Sidebar() {
                                 Users
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             {" "}
                             <Link to="product">
                                 <i className="bx bx-radio-circle" />
                                 Products
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             {" "}
                             <Link to="category">
