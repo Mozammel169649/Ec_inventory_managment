@@ -75,6 +75,10 @@ import React, { useEffect, useState } from 'react'
 //     return paginationHTML;
 // }
 
+
+
+
+
 function Pagination() {
     // const data_store = useSelector((state) => state[setup.prefix]);
     const [paginate, setPaginate] = useState([])
