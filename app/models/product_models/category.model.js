@@ -1,5 +1,4 @@
 const { default: mongoose, Schema } = require("mongoose");
-const userModel = require("./user.model");
 
 module.exports = mongoose.model("categories",
         mongoose.Schema({
@@ -10,7 +9,7 @@ module.exports = mongoose.model("categories",
             creator: {
                 type: Schema.Types.ObjectId,
                 require: true,
-                ref: "userModel",
+                ref: 'users',
             },
             status: {
                 type: Boolean,
