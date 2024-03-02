@@ -78,11 +78,11 @@ const controller = {
         if (user) {
             let passMatch = await bcrypt.compare(password, user.password);
             if (passMatch) {
-                let data = { 
+                let data = {
                     userName: user.userName,
                     email: user.email,
                     _id: user._id,
-                    role:user.role
+                    role: user.role
                 };
 
                 const token = await jwt.sign(data, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
