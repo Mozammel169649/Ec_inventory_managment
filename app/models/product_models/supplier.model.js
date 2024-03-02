@@ -18,7 +18,7 @@ mongoose.Schema({
     creator:{
         type: Schema.Types.ObjectId,
         require : true,
-        ref : "userModel"
+        ref : "users"
     },
     address:{
         type: String
