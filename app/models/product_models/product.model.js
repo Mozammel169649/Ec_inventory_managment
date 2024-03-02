@@ -30,14 +30,29 @@ module.exports = mongoose.model("product",
             ref: "userModel"
         },
         discount: {
+            // type: Schema.Types.ObjectId,
+            // require: true,
+            // ref: "diccountModel"
             type: Number,
             default: 0,
         },
         stokes: {
+            // type: Schema.Types.ObjectId,
+            // require: true,
+            // ref: "stokeModel"
             type: Number,
             default: 0,
         },
         varient: {
+             // type: Schema.Types.ObjectId,
+            // require: true,
+            // ref: "varientModel"
+            type: String,
+        },
+        supplier: {
+             // type: Schema.Types.ObjectId,
+            // require: true,
+            // ref: "varientModel"
             type: String,
         },
         price: {
