@@ -8,12 +8,10 @@ module.exports = mongoose.model("product_stoke",
         product_number: {
             type: String,
             require: true,
-            ref: "productModel"
         },
         stoke: {
             type: Number,
             require: true,
-            ref: "productModel",
         },
         creator: {
             type: Schema.Types.ObjectId,
