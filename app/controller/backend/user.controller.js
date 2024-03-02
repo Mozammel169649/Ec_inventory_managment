@@ -9,7 +9,7 @@ const controller = {
     update: async (req, res)=>{
         const id = req.body.id;
         const {userName,email,role} = req.body;
-        // console.log(req.body);
+        console.log('user role from user controller', role);
         const user = await userModel.findByIdAndUpdate({_id:id},{userName:userName, email:email , role:role});
         // console.log(user);
         return res.json(user);
