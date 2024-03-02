@@ -22,32 +22,32 @@ const varientSedder = require("./app/models/product_models/sedders/varient.sedde
 const seed = async()=> {
   
     // ------  usersedder --------//
-    await userseeder();
-    await userRoleSedder();
-    await userContactSedder();
-    await useraddressSedder();
+    // await userseeder();
+    // await userRoleSedder();
+    // await userContactSedder();
+    // await useraddressSedder();
 
-    // ------  productsedder --------//
-    await brandSedder();
+    // // ------  productsedder --------//
+    // await brandSedder();
     await categorySedder();
-    await supplierSedder();
-    await productSedder(); 
-    await discountSedder();
-    await proudctStokeSedder();
+    // await supplierSedder();
+    // await productSedder(); 
+    // await discountSedder();
+    // await proudctStokeSedder();
 
-    //-------- product varient ----------//
-     await sizeSedder();
-     await colorSedder();
-    await varientSedder();
-    await productVarientSedder();
+    // //-------- product varient ----------//
+    //  await sizeSedder();
+    //  await colorSedder();
+    // await varientSedder();
+    // await productVarientSedder();
 
 
-    // ------  selasedder --------//
-    await orderProductListSedder();
-    await orderSedder();
-    await orderDueSedder();
-    await orderHistorySedder();
-    await paymentSedder()
+    // // ------  selasedder --------//
+    // await orderProductListSedder();
+    // await orderSedder();
+    // await orderDueSedder();
+    // await orderHistorySedder();
+    // await paymentSedder()
     
 }
 
