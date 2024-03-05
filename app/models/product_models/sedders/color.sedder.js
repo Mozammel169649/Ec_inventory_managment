@@ -5,19 +5,19 @@ const colorModel = require("../color.model");
 
 const colors = [
     {
-        size: "s"
+        color: "red"
     },
     {
-        size: "M"
+        color: "blue"
     },
     {
-        size: "L"
+        color: "white"
     },
     {
-        size: "xL"
+        color: "black"
     },
     {
-        size: "xxL"
+        color: "yellow"
     },
 ]
 
