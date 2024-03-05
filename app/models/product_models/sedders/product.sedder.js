@@ -33,7 +33,7 @@ const products = async () => {
         stokes: 60,
 
         varient: "", //i don't undestrand this function
-
+        supplier :"",
         date: "2023-11-3 ",
         price: "5999",
         short_discription: "Esse cum ullam quasi quaerat sed commodi quia, expedita itaque facere saepe natus illum quam accusamus ipsam.",
