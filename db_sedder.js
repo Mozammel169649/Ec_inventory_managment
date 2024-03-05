@@ -29,7 +29,7 @@ const seed = async()=> {
 
     // // ------  productsedder --------//
     // await brandSedder();
-    await categorySedder();
+    // await categorySedder();
     // await supplierSedder();
     // await productSedder(); 
     // await discountSedder();
@@ -37,7 +37,7 @@ const seed = async()=> {
 
     // //-------- product varient ----------//
     //  await sizeSedder();
-    //  await colorSedder();
+     await colorSedder();
     // await varientSedder();
     // await productVarientSedder();
 
