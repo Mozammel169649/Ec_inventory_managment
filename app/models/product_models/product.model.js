@@ -1,8 +1,4 @@
 const { default: mongoose, Schema } = require("mongoose");
-const categoryModel = require("./category.model");
-const brandModel = require("./brand.model");
-const userModel = require("./user.model");
-const productVarientModel = require("./productVarient.model");
 
 module.exports = mongoose.model("product",
     mongoose.Schema({
@@ -17,17 +13,17 @@ module.exports = mongoose.model("product",
         categories: {
             type: [Schema.Types.ObjectId],
             require: true,
-            ref: "categoryModel"
+            ref: "categories"
         },
         brand: {
             type: [Schema.Types.ObjectId],
             require: true,
-            ref: "brandModel"
+            ref: "brand"
         },
         creator: {
             type: Schema.Types.ObjectId,
             require: true,
-            ref: "userModel"
+            ref: "users"
         },
         discount: {
             // type: Schema.Types.ObjectId,
@@ -44,16 +40,14 @@ module.exports = mongoose.model("product",
             default: 0,
         },
         varient: {
-             // type: Schema.Types.ObjectId,
+            // type: Schema.Types.ObjectId,
             // require: true,
             // ref: "varientModel"
             type: String,
         },
         supplier: {
-             // type: Schema.Types.ObjectId,
-            // require: true,
-            // ref: "varientModel"
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "supplier"
         },
         price: {
             type: String,
