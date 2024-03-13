@@ -32,6 +32,7 @@ module.exports = mongoose.model("product",
             type: Number,
             default: 0,
         },
+        
         stokes: {
             // type: Schema.Types.ObjectId,
             // require: true,
