@@ -9,6 +9,8 @@ import store from './redux/app/store';
 import user_router from './pages/management/user/config/router';
 import product_router from './pages/management/product/config/router';
 import category_router from './pages/management/category/config/router';
+import brand_router from './pages/management/brand/config/router';
+import supplier_router from './pages/management/supplier/config/router';
 
 function Component() {
     const router = createHashRouter([
@@ -23,6 +25,8 @@ function Component() {
                 user_router,
                 product_router,
                 category_router,
+                brand_router,
+                supplier_router,
 
             ]
         }
