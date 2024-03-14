@@ -125,6 +125,13 @@ function Sidebar() {
                                 Suppliers
                             </Link>
                         </li>
+                        <li>
+                            {" "}
+                            <Link to="stock">
+                                <i className="bx bx-radio-circle" />
+                                Stocks
+                            </Link>
+                        </li>
                         
                     </ul>
                 </li>
