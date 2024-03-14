@@ -33,11 +33,11 @@ const seed = async()=> {
     // await supplierSedder();
     // await productSedder(); 
     // await discountSedder();
-    // await proudctStokeSedder();
+    await proudctStokeSedder();
 
     // //-------- product varient ----------//
     //  await sizeSedder();
-     await colorSedder();
+    //  await colorSedder();
     // await varientSedder();
     // await productVarientSedder();
 
