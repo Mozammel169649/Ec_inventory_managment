@@ -11,6 +11,7 @@ import product_router from './pages/management/product/config/router';
 import category_router from './pages/management/category/config/router';
 import brand_router from './pages/management/brand/config/router';
 import supplier_router from './pages/management/supplier/config/router';
+import stock_router from './pages/management/stock/config/router';
 
 function Component() {
     const router = createHashRouter([
@@ -27,6 +28,7 @@ function Component() {
                 category_router,
                 brand_router,
                 supplier_router,
+                stock_router,
 
             ]
         }
