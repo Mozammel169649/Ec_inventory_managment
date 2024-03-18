@@ -1,71 +1,75 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { create_product, get_all_product } from '../../../redux/features/product/productSlice';
 import { get_all_category } from '../../../redux/features/category/categorySlice';
 import { get_all_brand } from '../../../redux/features/brand/brandSlice';
-import { get_all_stock } from '../../../redux/features/stock/stockSlice';
-
+import Select from 'react-select';
+import { get_all_supplier } from '../../../redux/features/supplier/supplierSlice';
+import { Editor } from '@tinymce/tinymce-react';
 
 function Create() {
 
     const dispatch = useDispatch();
     const [data, setdata] = useState({});
 
+
+    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([]);
+    const [selectedBrandOptions, setSelectedBrandOptions] = useState([]);
+    const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
+
     useEffect(() => {
         // console.log("product useEffect run");
         dispatch(get_all_category());
-        dispatch(get_all_stock());
         dispatch(get_all_brand());
+        dispatch(get_all_supplier());
 
     }, []);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
+    const handleChangeCategory = (selected) => {
+        setSelectedCategoryOptions(selected);
+    };
+    const handleChangeBrand = (selected) => {
+        setSelectedBrandOptions(selected);
+    };
+    const handleChangeSupplier = (selected) => {
+        setSelectedSupplierOptions(selected);
+    };
 
     // useSelector(state => console.log(state))
     const category = useSelector(state => state.category.categorys);
     const brand = useSelector(state => state.brand.brands);
-    const stock = useSelector(state => state.stock.stocks);
+    const supplier = useSelector(state => state.supplier.suppliers);
 
-    // console.log("category", category);
-    // console.log("category", data);
-    // console.log("brand", brand);
-
-    const stockData =(ele)=>{
-    
-        var copydata = {...data , product: ele}
-
-        console.log(copydata);
-
-        setdata(copydata);
-
-        // // console.log("product stock number to get data",ele);
-        const adata = stock.find((e)=>e._id == ele);
-        // // console.log("stock details",adata);
-
-        const stockdata = document.getElementById("stock").value = adata?.stock;
-        setdata({ ...data, stocks: stockdata })
-
-
-        // // console.log("stock data", stockdata);
-
-        const supplierdata = document.getElementById("supplier").value = adata?.supplier.name;
-        setdata({ ...data, supplier: supplierdata })
-
-        
-        // // console.log("stock data", supplierdata);
-
-    }
-
-    // console.log(data);
+    const Category_options = [];
+    category.map((ele) => {
+        return (
+            Category_options.push({ label: ele.title, value: ele._id },)
+        )
+    })
+    const brand_options = [];
+    brand.map((ele) => {
+        return (
+            brand_options.push({ label: ele.title, value: ele._id },)
+        )
+    })
+    const supplier_options = [];
+    supplier.map((ele) => {
+        return (
+            supplier_options.push({ label: ele.name, value: ele._id },)
+        )
+    })
 
     const createData = async (event) => {
         event.preventDefault();
-        console.log(event);
-        // await
-        //     dispatch(create_product(data));
-        // dispatch(get_all_product());
+        let form = event.target;
+        let formData = new FormData(form);
+        // console.log(event.target);
+        console.log("FormData",FormData);
+        formData.append("tinyMCE",data);
+
+
+        await dispatch(create_product(formData));
+        dispatch(get_all_product());
     }
 
     return (
@@ -83,101 +87,114 @@ function Create() {
                             <div className='col-md-8'>
                                 <div className="form-group p-2">
                                     <label for="title">Title</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, title: e.target.value })} className="form-control" name="title" id="title" />
+                                    <input type="text" className="form-control" name="title" id="title" />
                                 </div>
                                 <div className="form-group p-2">
-                                    <label for="number">Product code</label>
-
-                                    <select onChange={(e) => stockData(e.target.value) } className="form-control" name="number" id="number">
-                                        <option value="">Select Product code</option>
-                                        {stock?.map((ele) => {
-                                            return (
-                                                <option className='p-2' key={ele.id} value={ele._id}>{ele.product_code}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <label for="code">Product code</label>
+                                    <input type="text" className="form-control" name="code" id="code" />
 
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="short_discription">Short Discription</label>
-                                    <textarea type="text" onChange={(e) => setdata({ ...data, short_discription: e.target.value })} className="form-control" name="short_discription" id="short_discription" />
+                                    <Editor
+                                        className="form-control"
+                                        name="short_discription"
+                                        id="short_discription" 
+                                        onChange={(e) => setdata({ ...data, short_discription: e.target.value })}
+                                        apiKey='2hom0d7uzv176aenof59sq7i7d418azo7otw06gq4v0l4u87'
+                                        init={{
+                                           height : "200px"
+                                        }}
+                                    />
+                                    {/* <textarea type="text" onChange={(e) => setdata({ ...data, short_discription: e.target.value })} className="form-control" name="short_discription" id="short_discription" /> */}
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="discription">Discription</label>
-                                    <textarea type="text" onChange={(e) => setdata({ ...data, discription: e.target.value })} className="form-control" name="discription" id="discription" />
+                                    <Editor
+                                        name="discription"
+                                        onChange={(e) => setdata({ ...data, discription: e.target.value })}
+                                        id="discription"
+                                        apiKey='2hom0d7uzv176aenof59sq7i7d418azo7otw06gq4v0l4u87'
+                                        init={{
+                                            height : "200px"
+                                        }}
+                                    />
+                                    {/* <textarea type="text" onChange={(e) => setdata({ ...data, discription: e.target.value })} className="form-control" name="discription" id="discription" /> */}
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="seo_title">SEO Title</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, seo_title: e.target.value })} className="form-control" name="seo_title" id="seo_title" />
+                                    <input type="text" className="form-control" name="seo_title" id="seo_title" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="tags">Tags</label>
-                                    <input multiple type="text" onChange={(e) => setdata({ ...data, tags: e.target.value })} className="form-control" name="tags[]" id="tags" />
+                                    <input multiple type="text" className="form-control" name="tags[]" id="tags" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="price">Price</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, price: e.target.value })} className="form-control" name="price" id="price" />
+                                    <input type="Number" className="form-control" name="price" id="price" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="discount">Discount</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, discount: e.target.value })} className="form-control" name="discount" id="discount" />
+                                    <input type="Number"  className="form-control" name="discount" id="discount" />
                                 </div>
 
                             </div>
                             <div className='col-md-4'>
                                 <div className="form-group p-2">
                                     <label for="supplier">Supplier</label>
-                                    <input type="text" className="form-control" name="supplier" id="supplier" />
+                                    <Select
+                                        className="text-dark"
+                                        options={supplier_options}
+                                        value={selectedSupplierOptions}
+                                        onChange={handleChangeSupplier}
+                                    />
+
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="stock">Stocks</label>
-                                    <input type="text"  className="form-control" name="stock" id="stock" />
+                                    <input type="Number" className="form-control" name="stock" id="stock" />
                                 </div>
                                 <div className="form-group p-2" >
                                     <label for="category">Category</label>
-                                    <select onChange={(e) => setdata({ ...data, category: e.target.value })}
-                                        className='form-control' name="category[]" id="category">
-                                             <option value="">Select Category</option>
-                                        {category?.map((ele) => {
-                                            return (
-                                                <option className='p-2' key={ele.id} value={ele._id}>{ele.title}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <Select
+                                        className="text-dark"
+                                        options={Category_options}
+                                        isMulti
+                                        value={selectedCategoryOptions}
+                                        onChange={handleChangeCategory}
+                                    />
                                 </div>
+
                                 <div className="form-group p-2" >
                                     <label for="brand">Brand</label>
-                                    <select onChange={(e) => setdata({ ...data, brand: e.target.value })}
-                                        className='form-control' name="brand[]" id="brand">
-                                              <option value="">Select Brand</option>
-                                        {brand?.map((ele) => {
-                                            return (
-                                                <option className='p-2' key={ele.id} value={ele._id}>{ele.title}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <Select
+                                        className="text-dark"
+                                        options={brand_options}
+                                        value={selectedBrandOptions}
+                                        onChange={handleChangeBrand}
+                                    />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="status">Status</label>
-                                    <input type="checkbox" className='m-2' onChange={(e) => setdata({ ...data, status: e.target.value })} name="status" id="status" />
+                                    <input type="checkbox" className='m-2' name="status" id="status" />
                                     <label for="status">Is Active</label>
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="varient">Varient</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, varient: e.target.value })} className="form-control" name="varient" id="varient" />
+                                    <input type="text" className="form-control" name="varient" id="varient" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="date" >Date</label>
-                                    <input type="date" onChange={(e) => setdata({ ...data, date: e.target.value })} className="form-control" name="date" id="date" />
+                                    <input type="date" className="form-control" name="date" id="date" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="image" >Image</label>
-                                    <input type="file" onChange={(e) => setdata({ ...data, image: e.target.value })} className="form-control" name="image" id="image" />
+                                    <input type="file" className="form-control" name="image" id="image" />
                                     <img src="" alt="" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="rtd_image">Related image</label>
-                                    <input type="file" onChange={(e) => setdata({ ...data, rtd_image: e.target.value })} className="form-control" name="rtd_image[]" id="rtd_image" />
+                                    <input type="file" className="form-control" name="rtd_image[]" id="rtd_image" />
                                     <div>
 
                                     </div>
@@ -187,7 +204,7 @@ function Create() {
 
                         <div className="form-group p-2 col-md-6 mx-auto">
                             <label for="crt_price">Current price</label>
-                            <input type="text" onChange={(e) => setdata({ ...data, crt_price: e.target.value })} name="crt_price" id='crt_price' className="form-control text-success" />
+                            <input type='Number' name="crt_price" id='crt_price' value={""} className="form-control text-success" readOnly />
                         </div>
                         <button type="submit" className="btn btn-primary m-2 mt-4 ">Submit</button>
                     </form>
