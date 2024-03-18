@@ -5,7 +5,7 @@ const controller = {
     all: async (req, res)=> {
         const data = await brandModel.find().populate('creator');
         // const data = await brandModel.find();
-        console.log("from brand model",data);
+        // console.log("from brand model",data);
         return res.json(data);
     },
     create : async(req, res)=>{
