@@ -6,36 +6,37 @@ const controller = {
     all: async (req, res)=> {
         console.log('res from controler',res.cookie);
         const data = await productModel.find().populate([{ path:'categories'},{ path:'brand'},{ path:'creator'}]);
-        console.log("from product model",data);
+        // console.log("from product model",data);
         return res.json(data)
     },
     create : async(req, res)=>{
         const {atoken} = req.cookies
         const decoded = jwt.decode(atoken, '6fd286f7-708a-429b-b53a-2bc5272e0db6', algorithms=['HS256'])
-        const {title} = req.body
+        console.log("product creator body data", req.body);
+        // const {} = req.body
 
-        const Data = new brandModel({
-            // title:,
-            // product_number:,
-            // categories:,
-            // brand:,
-            // creator:,
-            // discount:,
-            // stokes:,
-            // varient:,
-            // supplier:,
-            // price:,
-            // short_discription:,
-            // discription:,
-            // seo_title:,
-            // status:,
-            // date:,
-            // image:,
-            // related_images: ,
-            // taqs:,
-        });
-        await Data.save();
-        return res.json(Data);
+        // const Data = new brandModel({
+        //     // title:,
+        //     // product_number:,
+        //     // categories:,
+        //     // brand:,
+        //     // creator:,
+        //     // discount:,
+        //     // stokes:,
+        //     // varient:,
+        //     // supplier:,
+        //     // price:,
+        //     // short_discription:,
+        //     // discription:,
+        //     // seo_title:,
+        //     // status:,
+        //     // date:,
+        //     // image:,
+        //     // related_images: ,
+        //     // taqs:,
+        // });
+        // await Data.save();
+        // return res.json(Data);
     },
     update: async (req, res)=>{
         const id = req.body.id;
