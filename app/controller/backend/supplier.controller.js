@@ -5,8 +5,14 @@ const controller = {
     all: async (req, res) => {
         // console.log("all route ok");
         const data = await supplierModel.find().populate('creator');
-        // console.log("from supplier model",data);
         return res.json(data);
+    },
+    singleData: async (req, res) => {
+        // const id = req.params.id;
+        console.log('res from controler', req.params);
+        const data = await supplierModel.findOne({ _id: req.params.id });
+        // console.log("from product model",data);
+        return res.json(data)
     },
     create: async (req, res) => {
         const { atoken } = req.cookies
