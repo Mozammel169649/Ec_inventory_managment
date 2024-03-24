@@ -4,8 +4,9 @@ const productController = require('../../../app/controller/backend/product.contr
 
 router
     .get("/product", productController.all)
-    // .post("/createproduct", productController.create)
-    // .put("/updateproduct/:id", productController.update)
+    .get("/product/:id", productController.singleData)
+    .post("/createproduct", productController.create)
+    .put("/updateproduct/:id", productController.update)
     // .delete("/deleteproduct/:id", productController.delete)
 
 
