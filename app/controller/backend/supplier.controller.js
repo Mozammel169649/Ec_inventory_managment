@@ -9,8 +9,9 @@ const controller = {
     },
     singleData: async (req, res) => {
         // const id = req.params.id;
-        console.log('res from controler', req.params);
+        // console.log('res from singleSupplier controler');
         const data = await supplierModel.findOne({ _id: req.params.id });
+        // console.log("single data",data);
         // console.log("from product model",data);
         return res.json(data)
     },
