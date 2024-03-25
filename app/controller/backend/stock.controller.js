@@ -3,7 +3,7 @@ const productStokeModel = require('../../models/product_models/productStoke.mode
 
 const controller = {
     all: async (req, res)=> {
-        console.log("all stock controller hitted");
+        // console.log("all stock controller hitted");
         const data = await productStokeModel.find().populate([{ path:'supplier'},{ path:'creator'}]);
         // const data = await productStokeModel.find();
         console.log("from stock model",data);
