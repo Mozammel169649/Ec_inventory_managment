@@ -21,16 +21,16 @@ const upload_files = (file, id) => {
 
 const controller = {
     all: async (req, res) => {
-        console.log('res from controler', res.cookie);
+        // console.log('res from controler', res.cookie);
         const data = await productModel.find().populate([{ path: 'categories' }, { path: 'brand' }, { path: 'creator' }]);
         // console.log("from product model",data);
         return res.json(data)
     },
     singleData: async (req, res) => {
         // const id = req.params.id;
-        console.log('res from controler', req.params);
-        const data = await productModel.findOne({ _id: req.params.id });
-        // console.log("from product model",data);
+        // console.log('res from controler', req.params);
+        const data = await productModel.findOne({ _id: req.params.id }).populate([{ path: 'categories' }, { path: 'brand' }, { path: 'creator' }, {path: 'supplier'}]);
+        console.log("from product model",data);
         return res.json(data)
     },
     create: async (req, res) => {
