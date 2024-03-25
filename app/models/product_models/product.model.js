@@ -54,6 +54,10 @@ module.exports = mongoose.model("product",
             type: String,
             require: true
         },
+        current_price: {
+            type: String,
+            require: true
+        },
         short_discription: {
             type: String,
             require: true
@@ -75,7 +79,6 @@ module.exports = mongoose.model("product",
         },
         image: {
             type: String,
-            require: true,
         },
         related_images: {
             type: [String],
