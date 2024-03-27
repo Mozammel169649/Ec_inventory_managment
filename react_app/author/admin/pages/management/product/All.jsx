@@ -47,7 +47,7 @@ function All() {
           {data.map((ele) => {
             return (
               <tr >
-                <td></td>
+                <td><img src={"/"+ele.image} alt="" height={50}/>{ele.image}</td>
                 <td>{ele.title}</td>
                 <td>{ele.creator.userName}</td>
                 <td>{ele.status}</td>
