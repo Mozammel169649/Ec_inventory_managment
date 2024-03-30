@@ -2,6 +2,7 @@ import All from "../All"
 import Create from "../Create"
 import Edit from "../Edit"
 import ProductLayoute from "../Layoute"
+import Soluation from "../Soluation"
 import View from "../View"
 import setup from "./setup"
 
@@ -22,6 +23,10 @@ export default {
         {
             path: "view/:id",
             element: <View></View>
+        },
+        {
+            path: "soluation",
+            element: <Soluation></Soluation>
         },
         {
             path: "create",
