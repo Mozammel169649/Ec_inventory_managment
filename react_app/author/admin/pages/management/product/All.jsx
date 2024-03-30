@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { delete_product, get_all_product } from '../../../redux/features/product/productSlice';
@@ -20,14 +20,20 @@ function All() {
 
   return (
     <div>
-     <div>
+      <div>
         <center>
           <h5> All Product</h5>
         </center>
       </div>
-      <div>
-        <Link to={"create"} className='btn btn-info'> Add Product</Link>
+      <div className='d-flex'>
+        <div className='m-2'>
+          <Link to={"create"} className='btn btn-info'> Add Product</Link>
+        </div>
+        <div className='m-2'>
+          <Link to={"soluation"} className='btn btn-info'> Soluation</Link>
+        </div>
       </div>
+
       <br />
       <table className="table table-success table-striped">
         <thead>
@@ -47,12 +53,12 @@ function All() {
           {data.map((ele) => {
             return (
               <tr >
-                <td><img src={"/"+ele.image} alt="" height={50}/>{ele.image}</td>
+                <td><img src={"/" + ele.image} alt="" height={50} /></td>
                 <td>{ele.title}</td>
-                <td>{ele.creator.userName}</td>
-                <td>{ele.status}</td>
+                <td>{ele?.creator?.userName}</td>
+                <td>{ele?.status ? "Active" : "Unactive"}</td>
                 <td>
-                  {ele.brand.map((e) => {
+                  {ele?.brand.map((e) => {
                     return (
                       <p>{e.title}</p>
                     )
@@ -60,15 +66,15 @@ function All() {
                   )}
                 </td>
                 <td>
-                  {ele.categories.map((e) => {
+                  {ele?.categories.map((e) => {
                     return (
                       <p>{e.title}</p>
                     )
                   }
                   )}
                 </td>
-                <td>{ele.price}</td>
-                <td>{ele.discount}</td>
+                <td>{ele?.price}</td>
+                <td>{ele?.discount}</td>
                 <td class="justify-content-center"  >
                   <Link to={`view/${ele?._id}`} className='btn btn-info m-2'>View</Link>
                   <Link to={`edit/${ele?._id}`} className='btn btn-warning m-2'>Edit</Link>
