@@ -8,6 +8,7 @@ const appDir = dirname(require.main.filename);
 
 const upload_files = (file, id) => {
     let file_name = parseInt(Math.random() * 1000) + id + file.name;
+    console.log(file_name);
 
     const path = appDir + "/public/uploads/posts/" + file_name;
 
@@ -29,8 +30,8 @@ const controller = {
     singleData: async (req, res) => {
         // const id = req.params.id;
         // console.log('res from controler', req.params);
-        const data = await productModel.findOne({ _id: req.params.id }).populate([{ path: 'categories' }, { path: 'brand' }, { path: 'creator' }, {path: 'supplier'}]);
-        console.log("from product model",data);
+        const data = await productModel.findOne({ _id: req.params.id }).populate([{ path: 'categories' }, { path: 'brand' }, { path: 'creator' }, { path: 'supplier' }]);
+        console.log("from product model", data);
         return res.json(data)
     },
     create: async (req, res) => {
@@ -46,7 +47,7 @@ const controller = {
         }
         // console.log("product creator body data", req.body);
 
-        const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription, discription } = req.body;
+        const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription,   discription } = req.body;
 
         let data = {
             title: title,
@@ -65,7 +66,6 @@ const controller = {
             status: status,
             current_price: crt_price,
         };
-
         let product = {};
         try {
             product = await productModel.create(data);
@@ -77,9 +77,11 @@ const controller = {
 
             if (req.files?.image && req.files?.image.size) {
                 image_path = upload_files(req.files.image, product._id)
+                console.log(image_path);
             }
-            if (req.files?.rtd_image && req.files?.rtd_image[0].size) {
+            if (req.files?.rtd_image) {
                 related_image = req.files.rtd_image.map((file) => upload_files(file, product._id));
+                console.log(related_image);
             }
 
             product.image = image_path;
@@ -103,13 +105,12 @@ const controller = {
             // console.log(status);
         }
         const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription, discription } = req.body;
-       
+
         let data = {
             title: title,
             product_number: code,
             categories: category,
             brand: brand,
-            creator: decoded,
             discount: discount,
             stokes: stock,
             varient: varient,
@@ -124,8 +125,8 @@ const controller = {
 
         let product = {};
         try {
-            product = await blogModel.findOneAndUpdate({ _id: req.params.id }, data);
-        
+            product = await productModel.findOneAndUpdate({ _id: req.params.id }, data);
+
             var image_path = product.image || "";
             var related_image = product.related_images || [];
             // console.log(req.files);
@@ -149,10 +150,11 @@ const controller = {
 
     },
     delete: async (req, res) => {
-        // console.log("hello");
+        // console.log(  " from delete product","hello");
         const id = req.params.id;
+        // console.log(id);
         const user = await productModel.findByIdAndDelete({ _id: id });
-        // console.log(user);
+        // // console.log(user);
         return res.json(user);
     }
 
