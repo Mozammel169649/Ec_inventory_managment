@@ -1,6 +1,10 @@
+
+//// data loade hocce na.....
+
+
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { get_single_product, get_all_product } from '../../../redux/features/product/productSlice';
+import { get_single_product, get_all_product, update_product } from '../../../redux/features/product/productSlice';
 import { get_all_category } from '../../../redux/features/category/categorySlice';
 import { get_all_brand } from '../../../redux/features/brand/brandSlice';
 import Select from 'react-select';
@@ -16,32 +20,27 @@ function Create() {
     const [selectedBrandOptions, setSelectedBrandOptions] = useState([]);
     const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
 
-    useEffect(() => {
-        dispatch(get_single_product(id));
+    useEffect(async () => {
+        await dispatch(get_single_product(id));
 
     }, []);
 
 
-    console.log('selectedSupplierOptions', selectedSupplierOptions);
+    // console.log('selectedSupplierOptions', selectedSupplierOptions);
     const singleData = useSelector(state => state.product?.singleProduct);
 
-
+    // console.log("singleData", singleData);
 
     const loadData = async () => {
         await dispatch(get_all_category());
         await dispatch(get_all_brand());
         await dispatch(get_all_supplier());
-        // await dispatch(get_all_product())
         setLoding(false)
     }
 
     const category = useSelector(state => state.category.categorys);
     const brands = useSelector(state => state.brand.brands);
     const suppliers = useSelector(state => state.supplier.suppliers);
-
-    console.log('category', category);
-    console.log('brands', brands);
-    console.log('suppliers', suppliers);
 
 
     useEffect(() => {
@@ -53,13 +52,13 @@ function Create() {
     // }
 
 
-    const { brand, supplier, seo_title, categories, creator, discount, discription, image, price, product_number,
+    const { _id, brand, supplier, seo_title, categories, creator, discount, discription, image, price, product_number,
         related_images, short_discription, status, stokes, title, varient, current_price } = singleData
 
-        // setSelectedSupplierOptions({ label: supplier?.name, value: supplier?._id }) //main problem
+    // setSelectedSupplierOptions({ label: supplier?.name, value: supplier?._id }) //main problem
 
     // console.log("single Data",singleData);
-    console.log("supplier Data", supplier);
+    // console.log("supplier Data", supplier);
 
 
 
@@ -88,6 +87,7 @@ function Create() {
 
 
     const [data, setdata] = useState({
+        id: _id,
         title: title,
         product_number: product_number,
         categories: categories,
@@ -150,13 +150,11 @@ function Create() {
         document.getElementById("crt_price").value = current_price;
     }
 
-    const createData = async (event) => {
-        event.preventDefault();
-        // let form = event.target;
-        // let formData = new FormData(form);
-        // await formData.append("short_discription", data?.short_discription);
-        // await formData.append("discription", data?.discription);
-        // await dispatch(create_product(formData));
+    const updateData = async (event) => {
+        event.preventDefault()
+        console.log(data);
+
+        // await dispatch(update_product(data));
         // dispatch(get_all_product());
     }
 
@@ -164,7 +162,7 @@ function Create() {
 
 
 
-   
+
 
     return (
 
@@ -175,7 +173,7 @@ function Create() {
             <div className='mx-auto'>
 
                 <div>
-                    <form method='POST' onSubmit={createData} >
+                    <form method='POST' onSubmit={updateData} >
                         <div className='d-flex'>
                             <div className='col-md-8'>
                                 <div className="form-group p-2">
@@ -286,16 +284,18 @@ function Create() {
                                     <label for="image" >Image</label>
                                     <input type="file" className="form-control" name="image" id="image" />
                                     <div>
-                                        <img style={{ height: '60px' }} src={"/" + data.image} alt="" />
+                                        <img style={{ height: '60px' }} src={"/" + image} alt="" />
                                     </div>
 
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="rtd_image">Related image</label>
                                     <input type="file" className="form-control" name="rtd_image[]" id="rtd_image" />
-                                    <div>
-                                        <img style={{ height: '60px' }} src={"/" + data.related_images} alt="" />
-                                    </div>
+                                    <td>{related_images?.map((ele) => {
+                                        return (
+                                            <img style={{ height: "60px" }} src={"/" + ele} alt="" />
+                                        )
+                                    })}</td>
                                 </div>
                             </div>
                         </div>
