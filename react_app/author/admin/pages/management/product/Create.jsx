@@ -16,7 +16,6 @@ function Create() {
     });
     const [price, setprice] = useState({ price: 0 })
 
-
     const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([]);
     const [selectedBrandOptions, setSelectedBrandOptions] = useState([]);
     const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
@@ -69,12 +68,13 @@ function Create() {
     const handlediscriptionEditor = (content) => {
         setdata({ ...data, discription: content });
     };
-   
+
+
 
     const pricesetup = (e) => {
         const main_price = price.price;
         const discount_percentig = e;
-        const current_price = Math.ceil( main_price - discount_percentig / 100 * main_price);
+        const current_price = Math.ceil(main_price - discount_percentig / 100 * main_price);
 
         document.getElementById("crt_price").value = current_price;
     }
@@ -82,13 +82,13 @@ function Create() {
     const createData = async (event) => {
         event.preventDefault();
         let form = event.target;
-        
+
         // if(form.status?.checked == false){
         //     setdata({ ...data, status: false });
         // }else{
         //     setdata({ ...data, status: true });
         // }
-        
+
         let formData = new FormData(form);
         await formData.append("short_discription", data?.short_discription);
         await formData.append("discription", data?.discription);
@@ -159,7 +159,7 @@ function Create() {
                                 </div> */}
                                 <div className="form-group p-2">
                                     <label for="price">Price</label>
-                                    <input type="Number" onChange={(e)=>setprice({price : e.target.value})} className="form-control" name="price" id="price" />
+                                    <input type="Number" onChange={(e) => setprice({ price: e.target.value })} className="form-control" name="price" id="price" />
                                     {/* <input type="Number" onChange={(e) => crtValueSet(e)} className="form-control" name="price" id="price" /> */}
                                 </div>
                                 <div className="form-group p-2">
@@ -218,14 +218,10 @@ function Create() {
                                 <div className="form-group p-2">
                                     <label for="image" >Image</label>
                                     <input type="file" className="form-control" name="image" id="image" />
-                                    <img src="" alt="" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="rtd_image">Related image</label>
                                     <input type="file" multiple className="form-control" name="rtd_image[]" id="rtd_image" />
-                                    <div>
-                                    
-                                    </div>
                                 </div>
                             </div>
                         </div>
