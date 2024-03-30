@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { get_single_product } from '../../../redux/features/product/productSlice';
@@ -19,36 +20,124 @@ function View() {
             <center>
                 <h3> product Detalse </h3>
             </center>
-            <div className='text-center mt-4 '>
+            <div>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th className='ml-3'>:</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Product title</td>
+                            <td>:</td>
+                            <td>{products.title}</td>
+                        </tr>
+                        <tr>
+                            <td>Product number</td>
+                            <td>:</td>
+                            <td>{products.product_number}</td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>:</td>
+                            <td> {products?.categories?.map((e) => <p>{e.title}</p>)}</td>
+                        </tr>
+                        <tr>
+                            <td>Brand</td>
+                            <td>:</td>
+                            <td>{products?.brand?.map((e) => <p>{e.title}</p>)}</td>
+                        </tr>
+                        <tr>
+                            <td>Creator name</td>
+                            <td>:</td>
+                            <td>{products.creator?.userName}</td>
+                        </tr>
+                        <tr>
+                            <td>Creator email </td>
+                            <td>:</td>
+                            <td>{products.creator?.email}</td>
+                        </tr>
+                        <tr>
+                            <td>Creator Role </td>
+                            <td>:</td>
+                            <td>{products.creator?.role}</td>
+                        </tr>
+                        <tr>
+                            <td> Product discount </td>
+                            <td>:</td>
+                            <td> {products.discount}</td>
+                        </tr>
+                        <tr>
+                            <td>Product stocks </td>
+                            <td>:</td>
+                            <td>{products.stokes}</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier name </td>
+                            <td>:</td>
+                            <td>{products.supplier?.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier email  </td>
+                            <td>:</td>
+                            <td>Supplier email </td>
+                        </tr>
+                        <tr>
+                            <td> Supplier Nunber</td>
+                            <td>:</td>
+                            <td>{products.supplier?.number}</td>
+                        </tr>
+                        <tr>
+                            <td> Price</td>
+                            <td>:</td>
+                            <td>{products.price}</td>
+                        </tr>
+                        <tr>
+                            <td>Current_price</td>
+                            <td>:</td>
+                            <td>{products.current_price}</td>
+                        </tr>
+                        <tr>
+                            <td>Short_discription</td>
+                            <td>:</td>
+                            <td>{products.short_discription}</td>
+                        </tr>
+                        <tr>
+                            <td>Discription</td>
+                            <td>:</td>
+                            <td>{products.discription}</td>
+                        </tr>
+                        <tr>
+                            <td>Seo_title</td>
+                            <td>:</td>
+                            <td>{products.seo_title}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>:</td>
+                            <td> {products.status ? "Active" : "Unactive"}</td>
+                        </tr>
+                        <tr>
+                            <td>Thumb Image</td>
+                            <td>:</td>
+                            <td><img style={{ height: "200px" }} src={"/" + products?.image} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td>Related Image</td>
+                            <td>:</td>
+                            <td>{products?.related_images?.map((ele) => {
+                                return (
+                                    <img style={{ height: "200px" }} src={"/" + ele} alt="" />
+                                )
+                            })}</td>
 
-                <p> Product title  : {products.title}</p>
-                <p> Product number : {products.product_number}</p>
-                <div>
-                    <label htmlFor="">Category :</label> 
-                    {products?.categories?.map((e) => <p>{e.title}</p>)}
-                </div>
-                <div>
-                    <label htmlFor="">Brand :</label>
-                    {products?.brand?.map((e) =><p>{e.title}</p>)}
-                </div>
-                <p> Creator name  : {products.creator?.userName}</p>
-                <p> Creator email : {products.creator?.email}</p>
-                <p> Creator Role  : {products.creator?.role}</p>
-                <p> Product discount : {products.discount}</p>
-                <p> Product stocks : {products.stokes}</p>
-                <p> Supplier name : {products.supplier?.name}</p>
-                <p> Supplier email : {products.supplier?.email}</p>
-                <p> Supplier Name : {products.supplier?.number}</p>
-                <p> Price : {products.price}</p>
-                <p> Current_price : {products.current_price}</p>
-                <p> Short_discription : {products.short_discription}</p>
-                <p> Discription : {products.discription}</p>
-                <p> Seo_title : {products.seo_title}</p>
-                <p> Status : {products.status ? "true" : "false"}</p>
-                <p> Current_price : {products.current_price}</p>
-                <div> Image : <img style={{ height: "200px" }} src={"/" + products?.image} alt="" /> </div>
-                <div> Related_image : <img style={{ height: "200px" }} src={"/" + products?.related_images} alt="" /> </div>
-                
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
 
         </div >
