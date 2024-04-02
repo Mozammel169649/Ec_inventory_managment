@@ -1,8 +1,4 @@
-
-//// data loade hocce na.....
-
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { get_single_product, get_all_product, update_product } from '../../../redux/features/product/productSlice';
 import { get_all_category } from '../../../redux/features/category/categorySlice';
@@ -15,157 +11,110 @@ import { useParams } from 'react-router';
 function Create() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const [loding, setLoding] = useState(true)
-    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([]);
-    const [selectedBrandOptions, setSelectedBrandOptions] = useState([]);
-    const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const shortDescriptionRef = useRef(null);
+    const descriptionRef = useRef(null);
 
-    useEffect(async () => {
-        await dispatch(get_single_product(id));
+    useEffect(() => {
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(get_all_category()),
+                dispatch(get_all_brand()),
+                dispatch(get_all_supplier())
+            ]);
+            setLoading(false);
+        };
+        loadData();
+    }, [dispatch]);
 
-    }, []);
+    useEffect(() => {
+        dispatch(get_single_product(id));
+    }, [dispatch, id]);
 
-
-    // console.log('selectedSupplierOptions', selectedSupplierOptions);
     const singleData = useSelector(state => state.product?.singleProduct);
-
-    // console.log("singleData", singleData);
-
-    const loadData = async () => {
-        await dispatch(get_all_category());
-        await dispatch(get_all_brand());
-        await dispatch(get_all_supplier());
-        setLoding(false)
-    }
-
     const category = useSelector(state => state.category.categorys);
     const brands = useSelector(state => state.brand.brands);
     const suppliers = useSelector(state => state.supplier.suppliers);
 
+    const {
+        title,
+        product_number,
+        short_discription,
+        discription,
+        seo_title,
+        price,
+        discount,
+        supplier,
+        stokes,
+        status,
+        image,
+        related_images,
+        current_price
+    } = singleData || {};
+
+    // console.log("sd", singleData);
+    // { label: "Ali hossain", value: "65d2e08ca3392fe84012221e" }
+    const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
+    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([{ label: 'Shoes', value: '65df278507b107c9bb4261b5' }]);
+    const [selectedBrandOptions, setSelectedBrandOptions] = useState([{ label: 'Bosundra', value: '65d2e08ca3392fe84012220d' }]);
 
     useEffect(() => {
-        loadData();
-    }, []);
+        if (singleData) {
+            const supplierOptions = supplier ? [{ label: supplier.name, value: supplier._id }] : [];
+            setSelectedSupplierOptions(supplierOptions);
+        }
+    }, [singleData]);
 
-    // if (loding) {
-    //     return <div>loading......</div>
-    // }
-
-
-    const { _id, brand, supplier, seo_title, categories, creator, discount, discription, image, price, product_number,
-        related_images, short_discription, status, stokes, title, varient, current_price } = singleData
-
-    // setSelectedSupplierOptions({ label: supplier?.name, value: supplier?._id }) //main problem
-
-    // console.log("single Data",singleData);
-    // console.log("supplier Data", supplier);
-
-
-
-    // useEffect(async () => {
-    //     console.log("hello");
-    //     console.log(supplier);
-    //     await dispatch(get_single_supplier(supplier));
-    // }, [supplier]);
-
-    // const singleSuppliers = useSelector(state => state.supplier.singleSuppliers);
-    // console.log("single supplier",singleSuppliers);
-
-    // const singleSuppliers = useSelector(state => state.supplier.singleSuppliers);
-    // console.log(singleSuppliers);
-    // console.log({ label: singleSuppliers.name, value: singleSuppliers._id });
-    //    setSelectedCategoryOptions({ label: singleSuppliers.name, value: singleSuppliers._id })
-
-
-    // if (brand) {
-    //        brand.map((ele)=> setSelectedBrandOptions(ele))
-    // }
-    // if (categories) {
-    //     brand.map((ele)=> setSelectedCategoryOptions(ele));
-
-
-
-
-    const [data, setdata] = useState({
-        id: _id,
-        title: title,
-        product_number: product_number,
-        categories: categories,
-        brand: brand,
-        creator: creator,
-        discount: discount,
-        stokes: stokes,
-        varient: varient,
-        supplier: supplier,
-        price: price,
-        short_discription: short_discription,
-        discription: discription,
-        seo_title: seo_title,
-        status: status,
-        current_price: current_price,
-        image: image,
-        related_images: related_images
-    });
 
     const handleChangeCategory = (selected) => {
         setSelectedCategoryOptions(selected);
     };
+
     const handleChangeBrand = (selected) => {
         setSelectedBrandOptions(selected);
     };
+
     const handleChangeSupplier = (selected) => {
         setSelectedSupplierOptions(selected);
     };
 
+    const CategoryOptions = category.map(ele => ({
+        label: ele.title,
+        value: ele._id
+    }));
 
-    const Category_options = [];
-    category.map((ele) => {
-        return (
-            Category_options.push({ label: ele.title, value: ele._id },)
-        )
-    })
-    const brand_options = [];
-    brands.map((ele) => {
-        return (
-            brand_options.push({ label: ele.title, value: ele._id },)
-        )
-    })
-    const supplier_options = [];
-    suppliers.map((ele) => {
-        return (
-            supplier_options.push({ label: ele.name, value: ele._id },)
-        )
-    })
-    const handleshortdiscriptionEditor = (content) => {
-        setdata({ ...data, short_discription: content });
-    };
-    const handlediscriptionEditor = (content) => {
-        setdata({ ...data, discription: content });
-    };
+    const BrandOptions = brands.map(ele => ({
+        label: ele.title,
+        value: ele._id
+    }));
+
+    const SupplierOptions = suppliers.map(ele => ({
+        label: ele.name,
+        value: ele._id
+    }));
 
     const pricesetup = (e) => {
-        const main_price = price;
-        const discount_percentig = e;
-        const current_price = Math.ceil(main_price - discount_percentig / 100 * main_price);
-        document.getElementById("crt_price").value = current_price;
-    }
+        const mainPrice = price;
+        const discountPercentage = e;
+        const currentPrice = Math.ceil(mainPrice - discountPercentage / 100 * mainPrice);
+        document.getElementById("crt_price").value = currentPrice;
+    };
 
     const updateData = async (event) => {
-        event.preventDefault()
-        console.log(data);
-
-        // await dispatch(update_product(data));
-        // dispatch(get_all_product());
-    }
-
-
-
-
-
-
-
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        formData.append("id", id);
+        formData.append("short_discription", shortDescriptionRef.current.getContent());
+        formData.append("discription", descriptionRef.current.getContent());
+        await dispatch(update_product(formData));
+        await dispatch(get_all_product());
+    };
+    // if (singleData && singleData.supplier) {
+    //     const { _id, brand, supplier, seo_title, categories, discount, discription, image, price, product_number,
+    //         related_images, short_discription, status, stokes, title, current_price } = singleData;
+    // console.log('supplier name', supplier);
     return (
-
         <div>
             <center>
                 <h3>Edit product</h3>
@@ -176,13 +125,18 @@ function Create() {
                     <form method='POST' onSubmit={updateData} >
                         <div className='d-flex'>
                             <div className='col-md-8'>
+
                                 <div className="form-group p-2">
                                     <label for="title">Title</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, title: e.target.value })} defaultValue={title} className="form-control" name="title" id="title" />
+                                    <input type="text"
+                                        // onChange={(e) => setdata({ ...data, title: e.target.value })}
+                                        defaultValue={title} className="form-control" name="title" id="title" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="code">Product code</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, product_number: e.target.value })} defaultValue={product_number} className="form-control" name="code" id="code" />
+                                    <input type="text"
+                                        //  onChange={(e) => setdata({ ...data, product_number: e.target.value })} 
+                                        defaultValue={product_number} className="form-control" name="code" id="code" />
 
                                 </div>
                                 <div className="form-group p-2">
@@ -191,13 +145,16 @@ function Create() {
                                         className="form-control"
                                         name="short_discription"
                                         id="short_discription"
+                                        onInit={(evt, editor) =>
+                                            (short_discription.current = editor)
+                                        }
                                         initialValue={short_discription}
-                                        onEditorChange={handleshortdiscriptionEditor}
+                                        // onEditorChange={handleshortdiscriptionEditor}
                                         apiKey='2hom0d7uzv176aenof59sq7i7d418azo7otw06gq4v0l4u87'
                                         init={{
                                             height: "200px"
                                         }}
-                                        defaultValue="Your default value goes here"
+                                    // defaultValue="Your default value goes here"
                                     />
                                 </div>
 
@@ -206,7 +163,10 @@ function Create() {
                                     <Editor
                                         name="discription"
                                         initialValue={discription}
-                                        onEditorChange={handlediscriptionEditor}
+                                        onInit={(evt, editor) =>
+                                            (discription.current = editor)
+                                        }
+                                        // onEditorChange={handlediscriptionEditor}
                                         id="discription"
                                         apiKey='2hom0d7uzv176aenof59sq7i7d418azo7otw06gq4v0l4u87'
                                         init={{
@@ -216,7 +176,9 @@ function Create() {
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="seo_title">SEO Title</label>
-                                    <input type="text" onChange={(e) => setdata({ ...data, seo_title: e.target.value })} defaultValue={seo_title} className="form-control" name="seo_title" id="seo_title" />
+                                    <input type="text"
+                                        //  onChange={(e) => setdata({ ...data, seo_title: e.target.value })} 
+                                        defaultValue={seo_title} className="form-control" name="seo_title" id="seo_title" />
                                 </div>
                                 {/* <div className="form-group p-2">
                                     <label for="tags">Tags</label>
@@ -224,37 +186,45 @@ function Create() {
                                 </div>   */}
                                 <div className="form-group p-2">
                                     <label for="price">Price</label>
-                                    <input type="Number" onChange={(e) => setdata({ ...data, price: e.target.value })} defaultValue={price} className="form-control" name="price" id="price" />
+                                    <input type="Number"
+                                        //  onChange={(e) => setdata({ ...data, price: e.target.value })} 
+                                        defaultValue={price} className="form-control" name="price" id="price" />
 
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="discount">Discount</label>
-                                    <input type="Number" onChange={(e) => pricesetup(e.target.value)} defaultValue={discount} className="form-control" name="discount" id="discount" />
+                                    <input type="Number"
+                                        onChange={(e) => pricesetup(e.target.value)}
+                                        defaultValue={discount} className="form-control" name="discount" id="discount" />
                                 </div>
 
                             </div>
                             <div className='col-md-4'>
+
                                 <div className="form-group p-2">
-                                    <label for="supplier">Supplier</label>
+                                    <label htmlFor="supplier">Supplier</label>
                                     <Select
                                         name='suppliers'
                                         className="text-dark"
-                                        options={supplier_options}
-                                        value={selectedSupplierOptions}
+                                        options={SupplierOptions}
+                                        defaultValue={selectedSupplierOptions}
                                         onChange={handleChangeSupplier}
                                     />
-
                                 </div>
+                                {/* Rest of the Select inputs */}
+
                                 <div className="form-group p-2">
                                     <label for="stock">Stocks</label>
-                                    <input type="Number" onChange={(e) => setdata({ ...data, stokes: e.target.value })} defaultValue={stokes} className="form-control" name="stock" id="stock" />
+                                    <input type="Number"
+                                        //  onChange={(e) => setdata({ ...data, stokes: e.target.value })}
+                                        defaultValue={stokes} className="form-control" name="stock" id="stock" />
                                 </div>
                                 <div className="form-group p-2" >
                                     <label for="category">Category</label>
                                     <Select
                                         name='category'
                                         className="text-dark"
-                                        options={Category_options}
+                                        options={CategoryOptions}
                                         isMulti
                                         value={selectedCategoryOptions}
                                         onChange={handleChangeCategory}
@@ -266,7 +236,7 @@ function Create() {
                                     <Select
                                         name='brands'
                                         className="text-dark"
-                                        options={brand_options}
+                                        options={BrandOptions}
                                         value={selectedBrandOptions}
                                         onChange={handleChangeBrand}
                                     />
@@ -312,6 +282,7 @@ function Create() {
         </div>
 
     )
+    // }
 }
 
 
