@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { get_single_product } from '../../../redux/features/product/productSlice';
 
 function View() {
     const { id } = useParams();
-    console.log(id);
+    // console.log(id);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(get_single_product(id));
@@ -14,7 +13,7 @@ function View() {
 
     const products = useSelector(state => state.product.singleProduct);
 
-    console.log(products.image)
+    // console.log(products.image)
     return (
         <div className='col-md-6 mx-auto'>
             <center>
