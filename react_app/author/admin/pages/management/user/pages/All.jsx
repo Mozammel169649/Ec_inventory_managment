@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { get_all_user, delete_user } from '../../../../redux/features/user/userSlice';
 import { Link } from 'react-router-dom';
-import Pagination from '../../../Pagination';
 
 
 function All() {
@@ -57,7 +56,7 @@ function All() {
         </table>
       </div>
       <div className='mb-4'>
-        <Pagination/>
+        pagination.....
       </div>
     </div>
   )
