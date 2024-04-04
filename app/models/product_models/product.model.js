@@ -27,7 +27,7 @@ module.exports = mongoose.model("product",
         },
         discount: {
             // type: Schema.Types.ObjectId,
-            // require: true,
+            require: true,
             // ref: "diccountModel"
             type: Number,
             default: 0,
@@ -35,7 +35,7 @@ module.exports = mongoose.model("product",
         
         stokes: {
             // type: Schema.Types.ObjectId,
-            // require: true,
+            require: true,
             // ref: "stokeModel"
             type: Number,
             default: 0,
@@ -48,23 +48,24 @@ module.exports = mongoose.model("product",
         },
         supplier: {
             type: Schema.Types.ObjectId,
+            require: true,
             ref: "supplier"
         },
         price: {
-            type: String,
+            type: Number,
             require: true
         },
         current_price: {
-            type: String,
-            require: true
+            type: Number,
+            // require: true
         },
         short_discription: {
             type: String,
-            require: true
+            // require: true
         },
         discription: {
             type: String,
-            require: true
+            // require: true
         },
         seo_title: {
             type: String,
@@ -79,6 +80,7 @@ module.exports = mongoose.model("product",
         },
         image: {
             type: String,
+            require: true,
         },
         related_images: {
             type: [String],
