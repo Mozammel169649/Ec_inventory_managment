@@ -2,12 +2,17 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import Cookies from 'js-cookie';
 
 function Login() {
   const [responce, setResponce] = useState({});
   const navigate = useNavigate();
 
+  const cookieExists = Cookies.get();
+  if(cookieExists?.atoken){
+    return navigate("/");
+  }
+ 
   const loginSubmit = async (event) => {
     event.preventDefault();
     axios.post("/login-submit", new FormData(event.currentTarget))
@@ -17,7 +22,7 @@ function Login() {
         if (res.data?.success) {
           const { userRole } = res.data;
           if (userRole === "user") {
-          //  return location.href = "/";
+            //  return location.href = "/";
             return navigate("/");
           }
           if (userRole === "admin") {
