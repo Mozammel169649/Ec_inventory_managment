@@ -1,7 +1,3 @@
-// import React, { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux';
-// import { get_all_data, get_single_data, create_data, update_data, delete_data } from '../redux/features/user/dataSlice';
-
 import { useEffect, useState } from "react"
 import SlelectCom from "../Components/SlelectCom"
 import Select from "../Components/Select"
@@ -9,54 +5,42 @@ import { useDispatch, useSelector } from "react-redux"
 import { get_all_supplier } from "../redux/features/supplier/supplierSlice";
 
 
-let data = [
-    {
-        title: "cup",
-        id: 1,
-    },
-    {
-        title: "mouse",
-        id: 2,
-    },
-    {
-        title: "monitor",
-        id: 3,
-    },
-]
 
-let supplierData = []
 
 function Dashboard() {
-    const [selected, setSelected] = useState([
-        {
-            title: "mouse",
-            id: 2,
-        },
-        {
-            title: "monitor",
-            id: 3,
-        },
+    // const [selected, setSelected] = useState([
+    //     {
+    //         title: "mouse",
+    //         id: 2,
+    //     },
+    //     {
+    //         title: "monitor",
+    //         id: 3,
+    //     },
 
-    ])
-
-    const [supplier, setSupplier] = useState({})
+    // ])
+    
+    const [supplier, setSupplier] = useState([]);
+    const [supplierData, setSupplierData] = useState([]);
+    const suppliers = useSelector(state => state.supplier.suppliers);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(get_all_supplier())
-    })
+    },[])
 
-    const suppliers = useSelector(state => state.supplier.suppliers);
-    if (suppliers) {
-        suppliers.map((item) => supplierData.push({ title: item.name, id: item._id, }))
-    }
-    // console.log(supplierData);
+    useEffect(() => {
+        var suu = suppliers.map((item) => ({ title: item.name, id: item._id, }));
+       setSupplierData(suu);
+    //    console.log(suu);
+    },[suppliers])
+
     return <div>
-        <h2>Admin Dashboard</h2>
-        <SlelectCom data={data} selected={selected} setSelected={setSelected} name={"sample_data"} />
+        {/* <h2>Admin Dashboard</h2>
+        <SlelectCom data={data} selected={selected} setSelected={setSelected} name={"sample_data"} /> */}
         <h2 className="pt-3">Admin Dashboard</h2>
-        <Select data={supplierData} supplier={supplier} setSupplier={setSupplier}/>
+        {/* <Select data={supplierData} supplier={supplier} setSupplier={setSupplier}/> */}
     </div>
 
 
