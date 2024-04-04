@@ -8,6 +8,8 @@ const supplierRoutes = require('./partials/backend/supplier.routes');
 const websiteRoutes = require('./partials/frontend/website.routes');
 const authRoutes = require('./partials/auth/auth.routes');
 const stockRoutes = require('./partials/backend/stock.routes');
+const isAuthMiddleware = require("../app/middelware/isAuthMiddleware");
+const dashboardRoutes = require('./partials/backend/dashboard.routes');
 const router = express.Router();
 
 router.use(userRoutes());
@@ -15,8 +17,11 @@ router.use(categoryRoutes());
 router.use(brandRoutes());
 router.use(supplierRoutes());
 router.use(productRoutes());
-router.use(websiteRoutes());
 router.use(authRoutes());
 router.use(roleRoutes());
-router.use(stockRoutes())
+router.use(stockRoutes());
+router.use(websiteRoutes());
+router.use(isAuthMiddleware());
+router.use(dashboardRoutes());
+
 module.exports =()=> router;
