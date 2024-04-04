@@ -21,7 +21,8 @@ function Edit() {
     const users = useSelector(state => state.users.users);
     console.log(users)
     const role = useSelector(state => state.role.role);
-    console.log(role)
+    // const role2 = useSelector(state => state.role);
+    console.log('role2', role)
     const user = users.find(e => e._id === id);
     const [updateUser, setUpdateUser] = useState({ id: user._id, email: user.email, role: user.role, userName: user.userName });
 
@@ -50,7 +51,7 @@ function Edit() {
                     </div>
                     <div className="form-group p-2" >
                         <label for="role">Role</label>
-                        <select onChange={(e) => setUpdateUser({ ...updateUser, role: e.target.value })}
+                        <select defaultValue={updateUser.role}  onChange={(e) => setUpdateUser({ ...updateUser, role: e.target.value })} 
                          value={updateUser.role} className='form-control' name="role">
                             {role?.map((ele) => {
                                 return (
