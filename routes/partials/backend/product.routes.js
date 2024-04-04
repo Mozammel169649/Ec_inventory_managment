@@ -6,8 +6,8 @@ router
     .get("/product", productController.all)
     .get("/product/:id", productController.singleData)
     .post("/createproduct", productController.create)
-    .put("/updateproduct/:id", productController.update)
-    // .delete("/deleteproduct/:id", productController.delete)
+    .put("/updateproduct", productController.update)
+    .delete("/deleteproduct/:id", productController.delete)
 
 
     
