@@ -4,67 +4,72 @@ import { get_single_product, get_all_product, update_product } from '../../../re
 import { get_all_category } from '../../../redux/features/category/categorySlice';
 import { get_all_brand } from '../../../redux/features/brand/brandSlice';
 import Select from 'react-select';
-import { get_all_supplier, get_single_supplier } from '../../../redux/features/supplier/supplierSlice';
+import { get_all_supplier} from '../../../redux/features/supplier/supplierSlice';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router';
+
 
 function Create() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const shortDescriptionRef = useRef(null);
     const descriptionRef = useRef(null);
 
-    useEffect(() => {
-        const loadData = async () => {
-            await Promise.all([
-                dispatch(get_all_category()),
-                dispatch(get_all_brand()),
-                dispatch(get_all_supplier())
-            ]);
-            setLoading(false);
-        };
-        loadData();
-    }, [dispatch]);
-
-    useEffect(() => {
-        dispatch(get_single_product(id));
-    }, [dispatch, id]);
+    const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
+    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([]);
+    const [selectedBrandOptions, setSelectedBrandOptions] = useState({});
 
     const singleData = useSelector(state => state.product?.singleProduct);
     const category = useSelector(state => state.category.categorys);
     const brands = useSelector(state => state.brand.brands);
     const suppliers = useSelector(state => state.supplier.suppliers);
 
-    const {
-        title,
-        product_number,
-        short_discription,
-        discription,
-        seo_title,
-        price,
-        discount,
-        supplier,
-        stokes,
-        status,
-        image,
-        related_images,
-        current_price
-    } = singleData || {};
+    useEffect(() => {
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(get_all_category()),
+                dispatch(get_all_brand()),
+                dispatch(get_all_supplier()),
+                dispatch(get_single_product(id))
+            ]);
 
-    // console.log("sd", singleData);
-    // { label: "Ali hossain", value: "65d2e08ca3392fe84012221e" }
-    const [selectedSupplierOptions, setSelectedSupplierOptions] = useState([]);
-    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([{ label: 'Shoes', value: '65df278507b107c9bb4261b5' }]);
-    const [selectedBrandOptions, setSelectedBrandOptions] = useState([{ label: 'Bosundra', value: '65d2e08ca3392fe84012220d' }]);
+            setLoading(true);
+        };
+        loadData();
+    }, []);
 
     useEffect(() => {
-        if (singleData) {
-            const supplierOptions = supplier ? [{ label: supplier.name, value: supplier._id }] : [];
+        if (singleData.supplier) {
+            const { name, _id } = singleData.supplier;
+            const supplierOptions = [{ label: name, value: _id }];
             setSelectedSupplierOptions(supplierOptions);
         }
     }, [singleData]);
 
+    useEffect(() => {
+        if (singleData.brand) {
+            const { title, _id } = singleData.brand[0];
+            const brandOptions = [{ label: title, value: _id }];
+            setSelectedBrandOptions(brandOptions);
+        }
+    }, [singleData]);
+
+    useEffect(() => {
+        if (singleData.categories) {
+            var category = singleData.categories.map((item) => ({ label: item.title, value: item._id }));
+            setSelectedCategoryOptions(category);
+        }
+    }, [singleData]);
+
+
+    if (loading == false) {
+        return (
+            <div>
+                <p> loading.....</p>
+            </div>
+        )
+    }
 
     const handleChangeCategory = (selected) => {
         setSelectedCategoryOptions(selected);
@@ -110,10 +115,7 @@ function Create() {
         await dispatch(update_product(formData));
         await dispatch(get_all_product());
     };
-    // if (singleData && singleData.supplier) {
-    //     const { _id, brand, supplier, seo_title, categories, discount, discription, image, price, product_number,
-    //         related_images, short_discription, status, stokes, title, current_price } = singleData;
-    // console.log('supplier name', supplier);
+
     return (
         <div>
             <center>
@@ -130,13 +132,13 @@ function Create() {
                                     <label for="title">Title</label>
                                     <input type="text"
                                         // onChange={(e) => setdata({ ...data, title: e.target.value })}
-                                        defaultValue={title} className="form-control" name="title" id="title" />
+                                        defaultValue={singleData.title} className="form-control" name="title" id="title" />
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="code">Product code</label>
                                     <input type="text"
                                         //  onChange={(e) => setdata({ ...data, product_number: e.target.value })} 
-                                        defaultValue={product_number} className="form-control" name="code" id="code" />
+                                        defaultValue={singleData.product_number} className="form-control" name="code" id="code" />
 
                                 </div>
                                 <div className="form-group p-2">
@@ -146,15 +148,13 @@ function Create() {
                                         name="short_discription"
                                         id="short_discription"
                                         onInit={(evt, editor) =>
-                                            (short_discription.current = editor)
+                                            (shortDescriptionRef.current = editor)
                                         }
-                                        initialValue={short_discription}
-                                        // onEditorChange={handleshortdiscriptionEditor}
+                                        initialValue={singleData.short_discription}
                                         apiKey='2hom0d7uzv176aenof59sq7i7d418azo7otw06gq4v0l4u87'
                                         init={{
                                             height: "200px"
                                         }}
-                                    // defaultValue="Your default value goes here"
                                     />
                                 </div>
 
@@ -162,9 +162,9 @@ function Create() {
                                     <label for="discription">Discription</label>
                                     <Editor
                                         name="discription"
-                                        initialValue={discription}
+                                        initialValue={singleData.discription}
                                         onInit={(evt, editor) =>
-                                            (discription.current = editor)
+                                            (descriptionRef.current = editor)
                                         }
                                         // onEditorChange={handlediscriptionEditor}
                                         id="discription"
@@ -178,7 +178,7 @@ function Create() {
                                     <label for="seo_title">SEO Title</label>
                                     <input type="text"
                                         //  onChange={(e) => setdata({ ...data, seo_title: e.target.value })} 
-                                        defaultValue={seo_title} className="form-control" name="seo_title" id="seo_title" />
+                                        defaultValue={singleData.seo_title} className="form-control" name="seo_title" id="seo_title" />
                                 </div>
                                 {/* <div className="form-group p-2">
                                     <label for="tags">Tags</label>
@@ -188,14 +188,14 @@ function Create() {
                                     <label for="price">Price</label>
                                     <input type="Number"
                                         //  onChange={(e) => setdata({ ...data, price: e.target.value })} 
-                                        defaultValue={price} className="form-control" name="price" id="price" />
+                                        defaultValue={singleData.price} className="form-control" name="price" id="price" />
 
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="discount">Discount</label>
                                     <input type="Number"
                                         onChange={(e) => pricesetup(e.target.value)}
-                                        defaultValue={discount} className="form-control" name="discount" id="discount" />
+                                        defaultValue={singleData.discount} className="form-control" name="discount" id="discount" />
                                 </div>
 
                             </div>
@@ -217,7 +217,7 @@ function Create() {
                                     <label for="stock">Stocks</label>
                                     <input type="Number"
                                         //  onChange={(e) => setdata({ ...data, stokes: e.target.value })}
-                                        defaultValue={stokes} className="form-control" name="stock" id="stock" />
+                                        defaultValue={singleData.stokes} className="form-control" name="stock" id="stock" />
                                 </div>
                                 <div className="form-group p-2" >
                                     <label for="category">Category</label>
@@ -243,7 +243,7 @@ function Create() {
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="status">Status</label>
-                                    <input type="checkbox" defaultChecked={status} className='m-2' name="status" id="status" />
+                                    <input type="checkbox" defaultChecked={singleData.status} className='m-2' name="status" id="status" />
                                     <label for="status">Is Active</label>
                                 </div>
                                 {/* <div className="form-group p-2">
@@ -254,14 +254,14 @@ function Create() {
                                     <label for="image" >Image</label>
                                     <input type="file" className="form-control" name="image" id="image" />
                                     <div>
-                                        <img style={{ height: '60px' }} src={"/" + image} alt="" />
+                                        <img style={{ height: '60px' }} src={"/" + singleData.image} alt="" />
                                     </div>
 
                                 </div>
                                 <div className="form-group p-2">
                                     <label for="rtd_image">Related image</label>
                                     <input type="file" className="form-control" name="rtd_image[]" id="rtd_image" />
-                                    <td>{related_images?.map((ele) => {
+                                    <td>{singleData.related_images?.map((ele) => {
                                         return (
                                             <img style={{ height: "60px" }} src={"/" + ele} alt="" />
                                         )
@@ -272,7 +272,7 @@ function Create() {
 
                         <div className="form-group p-2 col-md-6 mx-auto">
                             <label for="crt_price">Current price</label>
-                            <input type='Number' name="crt_price" id='crt_price' defaultValue={current_price} className="form-control " readOnly />
+                            <input type='Number' name="crt_price" id='crt_price' defaultValue={singleData.current_price} className="form-control " readOnly />
                         </div>
 
                         <button type="submit" className="btn btn-primary m-2 mt-4 ">Submit</button>
