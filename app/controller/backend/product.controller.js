@@ -8,13 +8,11 @@ const appDir = dirname(require.main.filename);
 
 const upload_files = (file, id) => {
     let file_name = parseInt(Math.random() * 1000) + id + file.name;
-    console.log(file_name);
-
+    // console.log(file_name);
     const path = appDir + "/public/uploads/posts/" + file_name;
-
     fs.move(file.path, path, function (err) {
         if (err) return console.error(err)
-        console.log("success!")
+        // console.log("success!")
     })
     thumb_image_path = "uploads/posts/" + file_name;
     return thumb_image_path;
@@ -31,7 +29,7 @@ const controller = {
         // const id = req.params.id;
         // console.log('res from controler', req.params);
         const data = await productModel.findOne({ _id: req.params.id }).populate([{ path: 'categories' }, { path: 'brand' }, { path: 'creator' }, { path: 'supplier' }]);
-        console.log("from product model", data);
+        // console.log("from product model", data);
         return res.json(data)
     },
     create: async (req, res) => {
@@ -47,7 +45,7 @@ const controller = {
         }
         // console.log("product creator body data", req.body);
 
-        const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription,   discription } = req.body;
+        const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription, discription } = req.body;
 
         let data = {
             title: title,
@@ -77,11 +75,9 @@ const controller = {
 
             if (req.files?.image && req.files?.image.size) {
                 image_path = upload_files(req.files.image, product._id)
-                console.log(image_path);
             }
             if (req.files?.rtd_image) {
                 related_image = req.files.rtd_image.map((file) => upload_files(file, product._id));
-                console.log(related_image);
             }
 
             product.image = image_path;
@@ -95,26 +91,26 @@ const controller = {
         return res.json(product);
     },
     update: async (req, res) => {
+        // console.log(req.body);
+        // return;
         const id = req.body.id;
         var status = "";
         if ("status" in req.body) {
             status = true;
-            // console.log(status);
         } else {
             status = false;
-            // console.log(status);
         }
-        const { title, code, seo_title, price, discount, supplier, stock, category, brand, varient, crt_price, short_discription, discription } = req.body;
-
+        const { title, code, seo_title, price, discount, suppliers, stock, category, brands, varient, crt_price, short_discription, discription } = req.body;
+        // return;
         let data = {
             title: title,
             product_number: code,
             categories: category,
-            brand: brand,
+            brand: brands,
             discount: discount,
             stokes: stock,
             varient: varient,
-            supplier: supplier,
+            supplier: suppliers,
             price: price,
             short_discription: short_discription,
             discription: discription,
@@ -122,16 +118,22 @@ const controller = {
             status: status,
             current_price: crt_price,
         };
-
         let product = {};
+        
         try {
-            product = await productModel.findOneAndUpdate({ _id: req.params.id }, data);
+            
+            console.log("product");
+            // return;
+
+            product = await productModel.findOneAndUpdate({ _id: id }, data);
+
+            // console.log("product", product);
+            // return;
 
             var image_path = product.image || "";
             var related_image = product.related_images || [];
-            // console.log(req.files);
 
-            if (req.files?.image && req.files?.image.size) {
+            if (req.files?.image && req.files.image?.size) {
                 image_path = upload_files(req.files.image, product._id)
             }
             if (req.files?.rtd_image && req.files?.rtd_image[0].size) {
