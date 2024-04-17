@@ -20,6 +20,9 @@ module.exports = mongoose.model("users",
             default: 'user',
             ref: "userRoleModel"
         },
+        // secrate_code :{
+        //     type: String,
+        // },
         address: String,
         contact: String,
     },
