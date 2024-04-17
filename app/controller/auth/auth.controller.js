@@ -50,7 +50,8 @@ const controller = {
                 userName: userData.userName,
                 email: userData.email,
                 _id: userData._id,
-                role: userData.role
+                role: userData.role,
+                // secrate_code :userData._id+Math.random()
             };
 
             const token = await jwt.sign(data, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
