@@ -8,9 +8,8 @@ const formData = require('express-form-data');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const isAuthMiddelware = require('./app/middelware/isAuth.middelware.js')
 const { render } = require('ejs')
-const isAdminMiddelware = require('./app/middelware/isAdmin.middelware.js')
+
 
 server.use(express.static("public"));
 server.use(bodyParser.json());
