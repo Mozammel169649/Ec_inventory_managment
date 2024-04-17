@@ -8,7 +8,7 @@ const controller ={
       //   console.log("token :" ,token);
          if(token){
             let user = await jwt.verify(token, '6fd286f7-708a-429b-b53a-2bc5272e0db6');
-            console.log(user);
+            // console.log(user);
             response.user = user ;
             return res.json(response);
          }else{
